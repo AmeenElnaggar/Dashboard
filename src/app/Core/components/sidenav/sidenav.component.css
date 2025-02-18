@@ -1,0 +1,19 @@
+i,
+.section-title,
+.menu-logo {
+  color: var(--main-color);
+}
+
+.menu-items::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* لون شريط التمرير */
+.menu-items::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.3);
+  border-radius: 5px;
+}
+
+.menu-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}

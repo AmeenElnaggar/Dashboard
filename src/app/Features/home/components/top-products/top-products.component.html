@@ -1,0 +1,51 @@
+<app-chart-title title="Top Products">
+  <div class="flex flex-col gap-2 p-2">
+    @for (product of products(); track $index) {
+    <div class="flex items-center gap-2">
+      <!-- الصوره بلتاج بتاعها -->
+      <div class="relative">
+        <img
+          class="rounded-border w-[75px] h-[50px]"
+          [src]="
+            'https://primefaces.org/cdn/primeng/images/demo/product/' +
+            product.image
+          "
+          [alt]="product.name"
+        />
+      </div>
+
+      <div class="flex justify-between flex-1">
+        <!-- الاسم بتاع المنتج -->
+        <div class="flex flex-col">
+          <div class="text-lg font-medium text-gray-700">
+            {{ product.name }}
+          </div>
+          <div
+            class="bg-gray-700 flex items-center gap-2 justify-center py-1 px-2 rounded-full w-fit"
+          >
+            <span
+              class="text-surface-900 dark:text-surface-0 font-medium text-sm"
+              >{{ product.rating }}</span
+            >
+            <i class="pi pi-star-fill text-yellow-500"></i>
+          </div>
+        </div>
+
+        <!-- السعر -->
+        <span class="text-xl text-gray-700 font-semibold">{{
+          "$" + product.price
+        }}</span>
+      </div>
+    </div>
+    }
+  </div>
+</app-chart-title>
+
+<!-- الكلمه بتاعت الاستوك -->
+<!-- <p-tag
+                    [value]="product.inventoryStatus"
+                    class="absolute"
+                    styleClass="dark:!bg-surface-900"
+                    [style.left.px]="4"
+                    [style.top.px]="4"
+                  /> -->

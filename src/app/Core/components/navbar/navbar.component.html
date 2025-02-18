@@ -1,0 +1,33 @@
+<div class="flex justify-between items-center sm:p-1 sm:mb-7">
+  <!-- Tobpar Start -->
+  <div class="flex items-center gap-x-4">
+    <p-button
+      (click)="onChangeVisible()"
+      icon="pi pi-bars text-lg"
+      class="text-[#6b7280] rounded-full w-10 h-10 flex items-center justify-center"
+    />
+    <div class="hidden sm:block">
+      <app-dashboard-title title="E-Commerce Dashboard" />
+    </div>
+  </div>
+  <!-- Tobpar End -->
+  <div class="flex gap-6 items-center">
+    <div class="relative sm:mr-0 -mr-12">
+      <input
+        type="text"
+        placeholder="Search..."
+        class="pl-10 pr-4 py-2 sm:w-full w-[75%] border rounded-full text-sm bg-white"
+      />
+      <i
+        class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+      ></i>
+    </div>
+
+    <i class="pi pi-cog text-[#6b7280]"></i>
+
+    <p-avatar
+      image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+      shape="circle"
+    />
+  </div>
+</div>

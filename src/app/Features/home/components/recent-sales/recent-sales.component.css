@@ -1,0 +1,14 @@
+.custom-table th {
+  font-weight: bold;
+  text-align: center;
+  background-color: #6e7bda;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-table td {
+  text-align: center;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.671);
+  background-color: #ffffffe8;
+  border-bottom: 1px solid #ddd;
+}

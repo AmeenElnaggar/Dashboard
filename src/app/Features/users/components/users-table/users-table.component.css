@@ -1,0 +1,44 @@
+.custom-table th {
+  font-weight: 600;
+  text-align: center;
+  background-color: #6d7ae0;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-table td {
+  text-align: center;
+  font-weight: 500;
+  color: gray;
+  border-bottom: 1px solid #f5f2f2;
+  cursor: pointer;
+}
+
+::ng-deep .custom-table .p-paginator {
+  margin-top: 10px;
+  padding: 10px; /* مسافات داخلية */
+}
+
+::ng-deep .custom-table .p-paginator .p-paginator-pages .p-paginator-page {
+  background-color: var(--main-color) !important; /* لون الزر */
+  color: white !important; /* لون النص */
+  border-radius: 5px;
+}
+
+::ng-deep
+  .custom-table
+  .p-paginator
+  .p-paginator-pages
+  .p-paginator-page.p-highlight {
+  background-color: #0056b3 !important; /* لون الزر لما يكون مفعّل */
+}
+
+/* تأثير hover على الصفوف */
+.hover-row:hover {
+  background-color: #f5f5f5; /* تغيير اللون عند المرور على الصف */
+}
+
+/* تغيير اللون عند التحديد */
+.p-highlight {
+  background-color: #007ad9 !important; /* اللون عند التحديد */
+  color: white;
+}
