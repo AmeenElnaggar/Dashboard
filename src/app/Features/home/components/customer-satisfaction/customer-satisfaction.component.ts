@@ -41,8 +41,8 @@ export class CustomerSatisfactionComponent {
         display: true,
         position: 'bottom',
         labels: {
+          color: '#9B9A96',
           usePointStyle: true,
-
           font: {
             size: 14,
             weight: 'bold',

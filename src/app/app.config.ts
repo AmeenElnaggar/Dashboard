@@ -10,6 +10,7 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { reducers } from './Store/store';
 import { AuthenticationEffect } from './Store/effects/login.effect';
+import { ThemeEffect } from './Store/effects/theme.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,6 +29,6 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideStore(reducers),
-    provideEffects([AuthenticationEffect]),
+    provideEffects([AuthenticationEffect, ThemeEffect]),
   ],
 };

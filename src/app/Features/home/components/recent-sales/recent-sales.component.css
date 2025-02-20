@@ -1,14 +1,14 @@
-.custom-table th {
-  font-weight: bold;
-  text-align: center;
-  background-color: #6e7bda;
-  border-bottom: 1px solid #ddd;
+::ng-deep .p-datatable-table-container {
+  border-radius: 12px;
+}
+::ng-deep .p-datatable-sortable-column {
+  @apply bg-[#6d7ae0] dark:bg-[#6d7b8d] text-center font-bold text-white;
 }
 
-.custom-table td {
-  text-align: center;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.671);
-  background-color: #ffffffe8;
-  border-bottom: 1px solid #ddd;
+tr {
+  @apply bg-[#f1f5f9] dark:bg-[#0f1629] text-center border-b dark:border-textColor font-medium text-textColor dark:text-textColor-dark;
+}
+
+td {
+  @apply p-3 text-center;
 }

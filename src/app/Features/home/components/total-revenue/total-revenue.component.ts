@@ -41,9 +41,30 @@ export class TotalRevenueComponent {
         display: true,
         position: 'bottom',
         labels: {
+          color: '#9B9A96',
           usePointStyle: true,
           font: {
             size: 14,
+            weight: 'bold',
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#9B9A96',
+          font: {
+            size: 12,
+            weight: 'bold',
+          },
+        },
+      },
+      y: {
+        ticks: {
+          color: '#9B9A96',
+          font: {
+            size: 12,
             weight: 'bold',
           },
         },

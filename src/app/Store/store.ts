@@ -1,12 +1,15 @@
 import { ActionReducerMap } from '@ngrx/store';
 import * as fromSidenav from './reducers/sidenav.reducer';
+import * as fromTheme from './reducers/theme.reducer';
 
 export interface StoreInterface {
   sidenav: fromSidenav.State;
+  theme: fromTheme.State;
 }
 
 export const reducers: ActionReducerMap<StoreInterface> = {
   sidenav: fromSidenav.sidenavReducer,
+  theme: fromTheme.themeReducer,
 };
 
 /*

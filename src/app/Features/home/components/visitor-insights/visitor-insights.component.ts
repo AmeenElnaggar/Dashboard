@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { ChartTitleComponent } from '../../../../Shared/components/chart-title/chart-title.component';
+import { NavbarService } from '../../../../Shared/services/navbar.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-visitor-insights',
@@ -10,6 +12,8 @@ import { ChartTitleComponent } from '../../../../Shared/components/chart-title/c
   styleUrl: './visitor-insights.component.css',
 })
 export class VisitorInsightsComponent {
+  isDarkMode = signal<boolean>(false);
+
   chartData = {
     labels: [
       'Jan',
@@ -29,7 +33,8 @@ export class VisitorInsightsComponent {
       {
         label: 'Loyal Customers',
         borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'transparent',
+        backgroundColor: 'rgba(75, 192, 192, 1)',
+
         data: [10, 25, 35, 15, 30, 40, 50, 45, 55, 60, 70, 80],
         fill: false,
         tension: 0.4,
@@ -37,7 +42,7 @@ export class VisitorInsightsComponent {
       {
         label: 'New Customers',
         borderColor: 'rgba(255, 99, 132, 1)',
-        backgroundColor: 'transparent',
+        backgroundColor: 'rgba(255, 99, 132, 1)',
         data: [5, 15, 20, 10, 25, 35, 45, 50, 60, 65, 75, 85],
         fill: false,
         tension: 0.4,
@@ -45,7 +50,7 @@ export class VisitorInsightsComponent {
       {
         label: 'Unique Customers',
         borderColor: 'rgba(54, 162, 235, 1)',
-        backgroundColor: 'transparent',
+        backgroundColor: 'rgba(54, 162, 235, 1)',
         data: [2, 10, 15, 8, 18, 25, 30, 35, 40, 50, 60, 70],
         fill: false,
         tension: 0.4,
@@ -60,9 +65,31 @@ export class VisitorInsightsComponent {
         display: true,
         position: 'bottom',
         labels: {
+          color: '#9B9A96',
+          usePointStyle: true,
           font: {
             size: 14,
-            weight: '700',
+            weight: 'bold',
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#9B9A96',
+          font: {
+            size: 12,
+            weight: 'bold',
+          },
+        },
+      },
+      y: {
+        ticks: {
+          color: '#9B9A96',
+          font: {
+            size: 12,
+            weight: 'bold',
           },
         },
       },

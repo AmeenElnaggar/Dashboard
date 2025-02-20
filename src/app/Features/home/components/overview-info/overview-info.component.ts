@@ -12,5 +12,9 @@ import { HomeService } from '../../services/home.service';
 export class OverviewInfoComponent {
   private homeService = inject(HomeService);
 
-  overviewInfo = this.homeService.data;
+  overviewInfo = this.homeService.overviewData;
+
+  ngOnInit() {
+    console.log(this.overviewInfo);
+  }
 }

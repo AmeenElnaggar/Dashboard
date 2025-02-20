@@ -22,5 +22,5 @@ import { ChartTitleComponent } from '../../../../Shared/components/chart-title/c
 export class TopProductsComponent {
   private homeService = inject(HomeService);
 
-  products = this.homeService.getProductsDataaa;
+  products = this.homeService.getProductsData;
 }

@@ -1,188 +1,36 @@
-import { HostListener, inject, Injectable, signal } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { StoreInterface } from '../../../Store/store';
-import { switchSidennavModeAction } from '../../../Store/actions/sidenav.action';
-import { Observable } from 'rxjs';
-import { sidenavSelector } from '../../../Store/selectors/sidenav.selector';
-import { Card } from '../../../Shared/models/cart.model';
+import { inject, Injectable } from '@angular/core';
+import { NavbarService } from '../../../Shared/services/navbar.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HomeService {
-  private store = inject(Store<StoreInterface>);
-  visible$: Observable<boolean> = this.store.select(sidenavSelector);
+  private navbarService = inject(NavbarService);
 
-  changeVisible() {
-    this.store.dispatch(switchSidennavModeAction());
-  }
-
-  data = [
+  overviewData = [
     {
       icon: 'pi pi-user ',
       title: 'Total Users',
       value: 120,
       url: '',
-      bgColor: 'bg-blue-300',
     },
     {
-      icon: 'pi pi-user ',
+      icon: 'pi pi-objects-column',
       title: 'Products',
       value: 50,
       url: '',
-      bgColor: 'bg-green-300',
     },
     {
-      icon: 'pi pi-user ',
+      icon: 'pi pi-cart-arrow-down ',
       title: 'Orders',
       value: 5,
       url: '',
-      bgColor: 'bg-orange-300',
     },
     {
-      icon: 'pi pi-user ',
+      icon: 'pi pi-wallet ',
       title: 'Total Sales',
       value: 1000,
       url: '',
-      bgColor: 'bg-yellow-300',
-    },
-  ];
-
-  usersData = [
-    {
-      name: 'Amin',
-      email: 'amin@example.com',
-      age: 25,
-      phone: '0123456789',
-      provider: 'Google',
-      role: 'Admin',
-      isDeleted: false,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Ahmed',
-      email: 'ahmed@example.com',
-      age: 30,
-      phone: '0112233445',
-      provider: 'Facebook',
-      role: 'User',
-      isDeleted: true,
-    },
-    {
-      name: 'Sara',
-      email: 'sara@example.com',
-      age: 28,
-      phone: '0109876543',
-      provider: 'Twitter',
-      role: 'Moderator',
-      isDeleted: false,
     },
   ];
 
@@ -269,71 +117,6 @@ export class HomeService {
         inventoryStatus: 'INSTOCK',
         rating: 4,
       },
-    ];
-  }
-
-  getProductsDataaa() {
-    return [
-      {
-        id: '1026',
-        code: 'zx23zc42c',
-        name: 'Teal T-Shirt',
-        description: 'Product Description',
-        image: 'teal-t-shirt.jpg',
-        price: 49,
-        category: 'Clothing',
-        quantity: 3,
-        inventoryStatus: 'LOWSTOCK',
-        rating: 3,
-      },
-      {
-        id: '1027',
-        code: 'acvx872gc',
-        name: 'Yellow Earbuds',
-        description: 'Product Description',
-        image: 'yellow-earbuds.jpg',
-        price: 89,
-        category: 'Electronics',
-        quantity: 35,
-        inventoryStatus: 'INSTOCK',
-        rating: 3,
-      },
-      {
-        id: '1028',
-        code: 'tx125ck42',
-        name: 'Yoga Mat',
-        description: 'Product Description',
-        image: 'yoga-mat.jpg',
-        price: 20,
-        category: 'Fitness',
-        quantity: 15,
-        inventoryStatus: 'INSTOCK',
-        rating: 5,
-      },
-      {
-        id: '1029',
-        code: 'gwuby345v',
-        name: 'Yoga Set',
-        description: 'Product Description',
-        image: 'yoga-set.jpg',
-        price: 20,
-        category: 'Fitness',
-        quantity: 25,
-        inventoryStatus: 'INSTOCK',
-        rating: 8,
-      },
-      {
-        id: '1029',
-        code: 'gwuby345v',
-        name: 'Yoga Set',
-        description: 'Product Description',
-        image: 'yoga-set.jpg',
-        price: 20,
-        category: 'Fitness',
-        quantity: 25,
-        inventoryStatus: 'INSTOCK',
-        rating: 8,
-      },
-    ];
+    ].slice(0, 5);
   }
 }

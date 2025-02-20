@@ -1,50 +1,31 @@
-<p-drawer [(visible)]="visible" [modal]="false" styleClass="sm:w-[17%] w-[61%]">
-  <ng-template #headless>
-    <div class="flex flex-col h-full bg-white">
-      <!-- اللوجو -->
-      <div class="flex justify-center items-center pt-9 pb-7">
-        <p class="menu-logo text-2xl text-black uppercase tracking-widest">
-          marcello
-        </p>
+<div class="">
+  <p-drawer
+    #drawerRef
+    [(visible)]="visible"
+    [modal]="true"
+    (onHide)="handleDrawerClose()"
+    styleClass="sm:w-[17%] w-[61%]"
+  >
+    <ng-template #headless>
+      <div class="flex flex-col h-full bg-background dark:bg-background-dark">
+        <!-- هيدر -->
+        <div
+          class="flex justify-center items-center pt-9 pb-7 text-textColor dark:text-textColor-dark"
+        >
+          <p class="menu-logo text-2xl uppercase tracking-widest">marcello</p>
+        </div>
+        <!-- بدي -->
+        <div class="overflow-y-auto text-black">
+          <ul class="list-none p-4 m-0">
+            <app-sidenav-body />
+          </ul>
+        </div>
+        <!-- فوتر -->
+        <div class="mt-auto">
+          <hr class="mb-4 mx-4 border-t border-0 border-surface" />
+          <app-sidenav-footer />
+        </div>
       </div>
-
-      <!-- بيانات الداشبورد -->
-      <div
-        class="menu-items px-7 py-[14px] text-[#4b5563] text-sm overflow-y-auto w-full"
-      >
-        <ul class="flex flex-col gap-6 list-none">
-          <li app-menuitem="x" class=""></li>
-        </ul>
-      </div>
-
-      <!-- معلومات اليوزر -->
-      <div class="mt-auto">
-        <hr class="mb-4 mx-4 border-t border-0 border-surface" />
-        <app-menu-user />
-      </div>
-    </div>
-  </ng-template>
-</p-drawer>
-
-<!-- <p-drawer [(visible)]="visible" [modal]="false">
-  <ng-template #headless>
-    <div class="flex flex-col h-full bg-white">
-      <div class="flex justify-center items-center pt-9 pb-7 bg-black">
-        <p class="menu-logo text-2xl uppercase tracking-widest">marcello</p>
-      </div>
-
-      <div
-        class="menu-items px-7 py-[14px] text-[#4b5563] text-sm overflow-y-auto w-full"
-      >
-        <ul class="flex flex-col gap-6 list-none">
-          <li app-menuitem class=""></li>
-        </ul>
-      </div>
-
-      <div class="mt-auto">
-        <hr class="mb-4 mx-4 border-t border-0 border-surface" />
-        <app-menu-user />
-      </div>
-    </div>
-  </ng-template>
-</p-drawer> -->
+    </ng-template>
+  </p-drawer>
+</div>

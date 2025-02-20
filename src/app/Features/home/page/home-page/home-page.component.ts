@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { OverviewInfoComponent } from '../../components/overview-info/overview-info.component';
 import { VisitorInsightsComponent } from '../../components/visitor-insights/visitor-insights.component';
 import { TotalRevenueComponent } from '../../components/total-revenue/total-revenue.component';
@@ -6,6 +6,7 @@ import { CustomerSatisfactionComponent } from '../../components/customer-satisfa
 import { CategorySalesComponent } from '../../components/category-sales/category-sales.component';
 import { RecentSalesComponent } from '../../components/recent-sales/recent-sales.component';
 import { TopProductsComponent } from '../../components/top-products/top-products.component';
+import { NavbarService } from '../../../../Shared/services/navbar.service';
 
 @Component({
   selector: 'app-home-page',
@@ -22,4 +23,10 @@ import { TopProductsComponent } from '../../components/top-products/top-products
     TopProductsComponent,
   ],
 })
-export class HomePageComponent {}
+export class HomePageComponent {
+  private navbarService = inject(NavbarService);
+
+  ngOnInit() {
+    this.navbarService.changeNavbarTitle('E-Commerce Dashboard');
+  }
+}

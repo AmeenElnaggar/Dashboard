@@ -3,5 +3,5 @@ export interface Card {
   icon: string;
   value: number;
   url: string;
-  bgColor: string;
+  bgColor?: string;
 }

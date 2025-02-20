@@ -1,0 +1,101 @@
+<p-table
+  #dt2
+  selectionMode="single"
+  dataKey="code"
+  [value]="users"
+  [sortOrder]="-1"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 50]"
+  [rows]="10"
+  [(selection)]="selectedUser"
+  [globalFilterFields]="[
+    'user',
+    'email',
+    'age',
+    'phone',
+    'provider',
+    'role',
+    'isDeleted'
+  ]"
+>
+  <!-- Search Bar -->
+  <ng-template #caption>
+    <div class="flex justify-between items-center mb-3">
+      <h1 class="text-[#227391] text-xl font-bold tracking-wide">
+        Users Details
+      </h1>
+      <p-iconfield>
+        <p-inputicon>
+          <i
+            class="pi pi-search absolute -bottom-2 translate-y-1/2 text-gray-500"
+          ></i>
+        </p-inputicon>
+        <input
+          pInputText
+          (input)="onFilterGlobal($event, dt2)"
+          type="text"
+          placeholder="Search keyword"
+          class="pl-10 pr-4 py-2 sm:w-full w-[75%] border dark:border-gray-500 rounded-full text-sm bg-backgroundBody dark:bg-background-dark text-textColor dark:text-textColor-dark"
+        />
+      </p-iconfield>
+    </div>
+  </ng-template>
+
+  <!-- Table Header -->
+  <ng-template #header>
+    <tr class="bg-gray-900 text-white">
+      <th pSortableColumn="name" class="p-3 text-left">
+        Username <p-sortIcon field="name" />
+      </th>
+      <th pSortableColumn="email" class="p-3 text-left">
+        Email <p-sortIcon field="email" />
+      </th>
+      <th pSortableColumn="age" class="p-3 text-left">
+        Age <p-sortIcon field="age" />
+      </th>
+      <th pSortableColumn="phone" class="p-3 text-left">
+        Phone <p-sortIcon field="phone" />
+      </th>
+      <th pSortableColumn="provider" class="p-3 text-left">
+        Provider <p-sortIcon field="provider" />
+      </th>
+      <th pSortableColumn="role" class="p-3 text-left">
+        Role <p-sortIcon field="role" />
+      </th>
+      <th pSortableColumn="isDeleted" class="p-3 text-left">
+        IsDeleted <p-sortIcon field="isDeleted" />
+      </th>
+      <th pSortableColumn="isDeleted" class="p-3 text-left">
+        Actions <p-sortIcon field="isDeleted" />
+      </th>
+    </tr>
+  </ng-template>
+
+  <!-- Table Body -->
+  <ng-template #body let-user>
+    <tr
+      [pSelectableRow]="user"
+      class="bg-gray-100 text-gray-900 border-b border-gray-300"
+      [ngClass]="{
+        'p-highlight bg-yellow-200': selectedUser === user,
+        'hover:bg-gray-300 cursor-pointer': true
+      }"
+    >
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.age }}</td>
+      <td>{{ user.phone }}</td>
+      <td>{{ user.provider }}</td>
+      <td>{{ user.role }}</td>
+      <td>{{ user.isDeleted }}</td>
+      <td>{{ user.isDeleted }}</td>
+    </tr>
+  </ng-template>
+
+  <!-- Empty Message -->
+  <ng-template #emptymessage>
+    <tr class="bg-gray-200 text-gray-700">
+      <td colspan="7" class="text-center p-3">No users found.</td>
+    </tr>
+  </ng-template>
+</p-table>

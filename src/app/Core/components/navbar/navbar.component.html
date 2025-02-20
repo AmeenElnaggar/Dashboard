@@ -4,10 +4,10 @@
     <p-button
       (click)="onChangeVisible()"
       icon="pi pi-bars text-lg"
-      class="text-[#6b7280] rounded-full w-10 h-10 flex items-center justify-center"
+      class="text-[#6b7280] hover:text-[#6b7280] rounded-full w-10 h-10 flex items-center justify-center"
     />
     <div class="hidden sm:block">
-      <app-dashboard-title title="E-Commerce Dashboard" />
+      <app-dashboard-title [title]="navbarTitle" />
     </div>
   </div>
   <!-- Tobpar End -->
@@ -16,14 +16,20 @@
       <input
         type="text"
         placeholder="Search..."
-        class="pl-10 pr-4 py-2 sm:w-full w-[75%] border rounded-full text-sm bg-white"
+        class="pl-10 pr-4 py-2 sm:w-full w-[75%] border dark:border-gray-500 rounded-full text-sm bg-backgroundBody dark:bg-background-dark text-textColor dark:text-textColor-dark"
       />
       <i
         class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
       ></i>
     </div>
 
-    <i class="pi pi-cog text-[#6b7280]"></i>
+    <div class="text-[#6b7280] cursor-pointer" (click)="onChangeTheme()">
+      @if (isDarkMode$ | async) {
+      <i class="pi pi-sun"></i>
+      }@else {
+      <i class="pi pi-moon"></i>
+      }
+    </div>
 
     <p-avatar
       image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"

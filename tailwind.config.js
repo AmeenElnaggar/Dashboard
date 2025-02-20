@@ -5,16 +5,20 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#ff5722", // اللون العادي
-          dark: "#007bff", // اللون لما يكون dark mode
+          DEFAULT: "#000", // اللون العادي
+          dark: "#fff", // اللون لما يكون dark mode
+        },
+        textColor: {
+          DEFAULT: "#29465B", // اللون العادي
+          dark: "#fff",
         },
         background: {
-          DEFAULT: "#f5f5f5",
-          dark: "#656422",
+          DEFAULT: "#fff",
+          dark: "#0f1629",
         },
-        text: {
-          DEFAULT: "#333",
-          dark: "#fff",
+        backgroundBody: {
+          DEFAULT: "#f9fafb",
+          dark: "#020517",
         },
       },
     },

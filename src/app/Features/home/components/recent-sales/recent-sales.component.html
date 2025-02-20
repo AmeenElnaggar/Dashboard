@@ -1,6 +1,6 @@
 <app-chart-title title="Recent Sales">
   <div class="mt-4">
-    <p-table [value]="products" class="custom-table">
+    <p-table [value]="products" dataKey="code" selectionMode="single">
       <ng-template #header>
         <tr>
           <th pSortableColumn="user" class="w-[100% / 6]">
@@ -15,11 +15,11 @@
           <th pSortableColumn="category" class="w-[100% / 6]">
             Category <p-sortIcon field="category" />
           </th>
-          <th pSortableColumn="quantity" class="w-[100% / 6]">
-            Quantity <p-sortIcon field="quantity" />
-          </th>
           <th pSortableColumn="price" class="w-[100% / 6]">
             Price <p-sortIcon field="price" />
+          </th>
+          <th pSortableColumn="quantity" class="w-[100% / 6]">
+            Quantity <p-sortIcon field="quantity" />
           </th>
         </tr>
       </ng-template>
@@ -29,7 +29,7 @@
           <td>{{ product.code }}</td>
           <td>{{ product.name }}</td>
           <td>{{ product.category }}</td>
-          <td>{{ product.price }}</td>
+          <td>{{ product.price | currency }}</td>
           <td>{{ product.quantity }}</td>
         </tr>
       </ng-template>

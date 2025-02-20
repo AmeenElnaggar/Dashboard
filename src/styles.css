@@ -3,30 +3,12 @@
 /* أو aura-dark-blue */
 /* @import "primeng/resources/themes/aura-light-blue/theme.css"; */
 /* @import "primeng/resources/primeng.css"; */
-@import "primeicons/primeicons.css";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  font-family: "Poppins", sans-serif !important;
-  background-color: #f9fafb;
-  color: black;
-  --main-color: #6366f1;
-}
-
-/*
 
 @import "primeicons/primeicons.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --main-color: #6366f1;
-}
 
 body {
   margin: 0;
@@ -34,4 +16,3 @@ body {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif !important;
 }
-*/
