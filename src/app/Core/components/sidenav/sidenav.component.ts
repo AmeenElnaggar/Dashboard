@@ -2,10 +2,9 @@ import {
   Component,
   HostListener,
   inject,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Drawer, DrawerModule } from 'primeng/drawer';
+import { DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 import { SelectModule } from 'primeng/select';

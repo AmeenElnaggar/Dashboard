@@ -1,0 +1,10 @@
+::ng-deep .p-progressspinner {
+  width: 25px;
+  height: 25px;
+}
+p-progress-spinner {
+  --p-progressspinner-color-1: #ffffff;
+  --p-progressspinner-color-2: #ffffff;
+  --p-progressspinner-color-3: #ffffff;
+  --p-progressspinner-color-4: #ffffff;
+}

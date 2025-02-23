@@ -12,8 +12,6 @@ import { take } from 'rxjs';
   styleUrl: './visitor-insights.component.css',
 })
 export class VisitorInsightsComponent {
-  isDarkMode = signal<boolean>(false);
-
   chartData = {
     labels: [
       'Jan',
