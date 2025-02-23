@@ -7,6 +7,7 @@ import { CategorySalesComponent } from '../../components/category-sales/category
 import { RecentSalesComponent } from '../../components/recent-sales/recent-sales.component';
 import { TopProductsComponent } from '../../components/top-products/top-products.component';
 import { NavbarService } from '../../../../Shared/services/navbar.service';
+import { AuthService } from '../../../Authentication/services/auth.service';
 
 @Component({
   selector: 'app-home-page',
@@ -25,8 +26,10 @@ import { NavbarService } from '../../../../Shared/services/navbar.service';
 })
 export class HomePageComponent {
   private navbarService = inject(NavbarService);
+  private authService = inject(AuthService);
 
   ngOnInit() {
     this.navbarService.changeNavbarTitle('E-Commerce Dashboard');
+    this.authService.isAuthenticated();
   }
 }

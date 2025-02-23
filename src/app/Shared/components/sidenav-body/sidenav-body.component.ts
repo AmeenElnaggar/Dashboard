@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { StyleClass } from 'primeng/styleclass';
+import { AuthService } from '../../../Features/Authentication/services/auth.service';
 
 @Component({
   selector: 'app-sidenav-body',
@@ -9,4 +10,10 @@ import { StyleClass } from 'primeng/styleclass';
   templateUrl: './sidenav-body.component.html',
   styleUrl: './sidenav-body.component.css',
 })
-export class SidenavBodyComponent {}
+export class SidenavBodyComponent {
+  private authService = inject(AuthService);
+
+  onSubmitLogout() {
+    this.authService.submitLogout();
+  }
+}

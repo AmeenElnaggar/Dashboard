@@ -1,14 +1,12 @@
 import { Component, inject } from '@angular/core';
 
 import { TableModule } from 'primeng/table';
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { ChartTitleComponent } from '../../../../Shared/components/chart-title/chart-title.component';
 import { ToastModule } from 'primeng/toast';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { UsersService } from '../../services/users.service';
-import { DashboardTitleComponent } from '../../../../Shared/components/dashboard-title/dashboard-title.component';
 import { NavbarService } from '../../../../Shared/services/navbar.service';
 import { Observable } from 'rxjs';
 
@@ -20,10 +18,9 @@ import { Observable } from 'rxjs';
     CommonModule,
     ButtonModule,
     ToastModule,
-    ChartTitleComponent,
     IconField,
     InputIcon,
-    DashboardTitleComponent,
+    NgIf,
   ],
   templateUrl: './allusers-table.component.html',
   styleUrl: './allusers-table.component.css',

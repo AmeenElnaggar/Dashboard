@@ -13,8 +13,4 @@ export class OverviewInfoComponent {
   private homeService = inject(HomeService);
 
   overviewInfo = this.homeService.overviewData;
-
-  ngOnInit() {
-    console.log(this.overviewInfo);
-  }
 }

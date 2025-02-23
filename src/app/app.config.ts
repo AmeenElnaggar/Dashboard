@@ -9,12 +9,14 @@ import Aura from '@primeng/themes/aura';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { reducers } from './Store/store';
-import { AuthenticationEffect } from './Store/effects/login.effect';
+import { AuthenticationEffect } from './Store/effects/auth.effect';
 import { ThemeEffect } from './Store/effects/theme.effect';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideHttpClient(),
     provideRouter(routes),
     provideAnimationsAsync(),
     providePrimeNG({

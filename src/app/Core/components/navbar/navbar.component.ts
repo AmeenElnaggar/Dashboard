@@ -27,7 +27,7 @@ export class NavbarComponent {
   ngOnInit() {
     this.isDarkMode$.subscribe((response: boolean) => {
       if (response) {
-        document.documentElement.classList.toggle('dark');
+        document.documentElement.classList.add('dark');
       } else {
         document.documentElement.classList.remove('dark');
       }

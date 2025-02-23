@@ -1,37 +1,47 @@
-<form
-  class="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800"
-  [formGroup]="myForm"
-  (ngSubmit)="onSubmit()"
->
-  <div class="inline-flex items-center gap-2 mt-10">
-    <p class="prata-regular text-3xl">Login</p>
-    <hr class="border-none h-[1.5px] w-8 bg-gray-800" />
-  </div>
-  <input
-    type="email"
-    class="w-full px-3 py-2 border border-gray-800"
-    placeholder="Email"
-    formControlName="email"
-  />
-
-  <input
-    type="password"
-    class="w-full px-3 py-2 border border-gray-800"
-    placeholder="Password"
-    formControlName="password"
-  />
-  <div class="w-full flex justify-between text-sm mt-[-8px]">
-    <p class="cursor-pointer">Forgot your password?</p>
-    <p class="cursor-pointer" [routerLink]="['/signup']">Create account</p>
-  </div>
-
-  <button
-    class="bg-black text-white font-light px-8 py-2 mt-4"
-    [disabled]="myForm.invalid"
-    [class]="{
-      'bg-gray-400': myForm.invalid
-    }"
+<div class="h-screen flex items-center justify-center">
+  <form
+    class="flex flex-col items-center w-[90%] sm:max-w-96 m-auto gap-4 text-gray-800"
+    [formGroup]="myForm"
+    (ngSubmit)="onSubmit()"
   >
-    Sign In
-  </button>
-</form>
+    <div class="inline-flex items-center gap-2 mt-10">
+      <hr class="border-none h-[1.5px] w-8 bg-gray-800" />
+      <p class="prata-regular text-3xl">Login</p>
+      <hr class="border-none h-[1.5px] w-8 bg-gray-800" />
+    </div>
+    <input
+      type="email"
+      class="w-full px-3 py-2 border border-gray-800 text-black bg-white"
+      placeholder="Email"
+      formControlName="email"
+    />
+
+    <input
+      type="password"
+      class="w-full px-3 py-2 border border-gray-800 text-black bg-white"
+      placeholder="Password"
+      formControlName="password"
+    />
+    <div class="w-full flex justify-between text-sm mt-[-8px]">
+      <p class="cursor-pointer">Forgot your password?</p>
+    </div>
+
+    <button
+      [disabled]="myForm.invalid"
+      class="bg-black py-[6px] px-3 text-center text-white font-semibold rounded-md w-full flex items-center justify-center gap-x-2"
+      [class]="{
+        'bg-gray-300': myForm.invalid
+      }"
+    >
+      <span>Sign In</span>
+      @if (isLoading$ | async) {
+      <app-spinner />
+      }
+    </button>
+    @if (!(isError$| async)?.success) {
+    <p class="text-lg text-red-600 text-center">
+      {{ (isError$ | async)?.message }}
+    </p>
+    }
+  </form>
+</div>
