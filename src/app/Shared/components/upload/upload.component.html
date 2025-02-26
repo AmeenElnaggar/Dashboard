@@ -1,0 +1,90 @@
+<div
+  class="relative w-fit bg-blue-500 sm:p-10 p-7 mx-auto rounded-full transform hover:scale-110 duration-150 cursor-pointer"
+  (click)="onToggleDialog()"
+>
+  <span
+    class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 text-4xl"
+    >+</span
+  >
+</div>
+
+<p-dialog [header]="dialogTitle()" [modal]="true" [(visible)]="visible">
+  <ng-content />
+
+  <div class="flex flex-col gap-10 justify-between h-[250px] items-center">
+    @if (allSelectedImages.length > 0) {
+    <!--  الصور -->
+    <div class="grid grid-cols-12 gap-x-8 gap-y-4">
+      @for (selectedImage of allSelectedImages; track $index) {
+      <img
+        *ngIf="selectedImage"
+        [src]="selectedImage"
+        alt="Selected Image"
+        class="h-[118px] w-[118px] object-cover rounded-lg border border-gray-300"
+        [class]="{
+          'col-span-6': allSelectedImages.length >= 2,
+          'col-span-12': allSelectedImages.length === 1,
+          'h-[175px]': allSelectedImages.length === 2,
+          'w-[175px]': allSelectedImages.length === 2,
+          'mt-8': allSelectedImages.length === 2,
+          'h-[250px]': allSelectedImages.length <= 1,
+          'w-[250px]': allSelectedImages.length <= 1,
+          'mx-auto': allSelectedImages.length <= 2
+        }"
+      />
+      }
+    </div>
+    }@else {
+    <!-- من غير صور -->
+    <div
+      class="border border-gray-600 border-dashed h-full w-full flex items-center justify-center"
+    >
+      <p class="text-2xl">No Images Uploaded</p>
+    </div>
+    }
+  </div>
+  <!-- ----------------------------------------------------------------------------------- -->
+
+  <!-- زرار الرفع -->
+  <div class="mt-10">
+    <label
+      for="upload"
+      class="bg-textColor w-full flex items-center justify-center gap-x-2 text-center p-2 rounded-full text-white cursor-pointer"
+      >Upload Image <i class="pi pi-image text-yellow-100"></i
+    ></label>
+    <input
+      type="file"
+      id="upload"
+      class="hidden"
+      (change)="onFileSelected($event)"
+      accept="image/*"
+      [multiple]="isMultiple()"
+    />
+  </div>
+
+  <!-- زرار الخروج او الاضافه -->
+  <div class="flex justify-around gap-2 mt-10 w-full">
+    <button
+      class="bg-red-500 p-2 rounded-lg w-full text-center text-white"
+      (click)="onToggleDialog()"
+    >
+      Cancel
+    </button>
+
+    <!-- (click)="onToggleDialog()" -->
+
+    <button
+      class="bg-emerald-500 py-[6px] px-3 text-center text-white font-semibold rounded-md w-full flex items-center justify-center gap-x-2"
+      [class]="{
+        'bg-gray-500': checkIfCanSave()
+      }"
+      (click)="onSave()"
+      [disabled]="checkIfCanSave()"
+    >
+      <span>Save</span>
+      @if (isLoading$ | async) {
+      <app-spinner />
+      }
+    </button>
+  </div>
+</p-dialog>

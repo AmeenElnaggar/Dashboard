@@ -12,7 +12,7 @@ export class HomeService {
       icon: 'pi pi-user ',
       title: 'Total Users',
       value: 120,
-      url: '',
+      url: 'allusers',
     },
     {
       icon: 'pi pi-objects-column',

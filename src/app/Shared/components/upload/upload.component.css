@@ -1,0 +1,11 @@
+::ng-deep .p-dialog {
+  @apply bg-background dark:bg-background-dark text-textColor dark:text-textColor-dark sm:h-[600px] sm:w-[500px] h-[500px] w-[350px];
+}
+
+::ng-deep .p-dialog-close-button {
+  @apply bg-textColor;
+}
+:host ::ng-deep .select-options {
+  @apply w-full md:w-56 text-textColor-dark bg-textColor mt-[10px]
+         h-[38px] rounded-lg p-1 cursor-pointer;
+}

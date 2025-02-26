@@ -1,0 +1,39 @@
+<div class="m-4">
+  <app-upload dialogTitle="Add Subcategory" [isMultiple]="false">
+    <div class="flex items-center gap-x-2">
+      <div class="flex flex-col gap-1 mb-5">
+        <label for="name" class="text-lg font-medium">Title</label>
+        <input
+          type="text"
+          id="name"
+          class="bg-white border p-1 rounded-md w-full text-black h-9"
+          placeholder="name"
+          #formInput
+          [(ngModel)]="enteredName"
+        />
+      </div>
+      <div>
+        <Select class="select-options" #formSelect>
+          <option value="" disabled selected hidden>Select a Category</option>
+          <option value="Berlin">Berlin</option>
+          <option value="Munich" class="hover:bg-black">Munich</option>
+          <option value="London">London</option>
+          <option value="Newyork">Newyork</option>
+          <option value="Paris">Paris</option>
+        </Select>
+      </div>
+    </div>
+  </app-upload>
+</div>
+
+<!--
+
+                <Select class="select-options">
+          <option value="" disabled selected hidden>Select a Category</option>
+          <option value="Berlin">Berlin</option>
+          <option value="Munich" class="hover:bg-black">Munich</option>
+          <option value="London">London</option>
+          <option value="Newyork">Newyork</option>
+          <option value="Paris">Paris</option>
+        </Select>
+        -->

@@ -11,6 +11,10 @@ import { filter, map, Observable } from 'rxjs';
 import { AuthData } from '../../model/authdata.model';
 import { SpinnerComponent } from '../../../../Shared/components/spinner/spinner.component';
 import { AsyncPipe } from '@angular/common';
+<<<<<<< HEAD
+=======
+import { SpinnerService } from '../../../../Shared/services/spinner.service';
+>>>>>>> 490d315 (Add Category Logic)
 
 @Component({
   selector: 'app-login-form',
@@ -21,8 +25,14 @@ import { AsyncPipe } from '@angular/common';
 })
 export class LoginFormComponent {
   private authService = inject(AuthService);
+<<<<<<< HEAD
 
   isLoading$: Observable<boolean> = this.authService.isLoading$;
+=======
+  private spinnerService = inject(SpinnerService);
+
+  isLoading$: Observable<boolean> = this.spinnerService.isLoading$;
+>>>>>>> 490d315 (Add Category Logic)
   isError$: Observable<any> = this.authService.authData$.pipe(
     filter((response: any) => response?.error),
     map((response: any) => {

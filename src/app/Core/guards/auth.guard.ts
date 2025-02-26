@@ -20,7 +20,10 @@ export const authGuard: CanMatchFn = (route, segments) => {
 
   return store.select(authModeSelector).pipe(
     map((response: string) => {
+<<<<<<< HEAD
       console.log(response);
+=======
+>>>>>>> 490d315 (Add Category Logic)
       if (response === 'Logout') {
         return true;
       } else {

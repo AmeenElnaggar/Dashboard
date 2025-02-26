@@ -1,0 +1,7 @@
+.notEmpty {
+  @apply absolute bottom-20 right-20;
+}
+
+.isEmpty {
+  @apply flex flex-col items-center mt-52;
+}

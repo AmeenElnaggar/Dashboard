@@ -19,7 +19,10 @@ export class AuthService {
   private store = inject(Store<StoreInterface>);
   private router = inject(Router);
 
+<<<<<<< HEAD
   isLoading$: Observable<boolean> = this.store.select(spinnerOfUiSelector);
+=======
+>>>>>>> 490d315 (Add Category Logic)
   authData$ = this.store.select(authDataSelector);
   authMode$ = this.store.select(authModeSelector);
 

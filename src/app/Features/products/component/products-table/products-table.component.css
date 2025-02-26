@@ -1,0 +1,67 @@
+::ng-deep .p-datatable-table-container {
+  @apply rounded-[12px];
+}
+::ng-deep .p-datatable-sortable-column {
+  @apply bg-[#6d7ae0] dark:bg-[#6d7b8d] text-center font-bold text-white;
+}
+
+::ng-deep .p-datatable-selectable-row {
+  @apply bg-[#f1f5f9] dark:bg-[#0f1629] text-center border-b dark:border-textColor font-medium text-textColor dark:text-textColor-dark;
+}
+td {
+  @apply p-3 text-center;
+}
+
+::ng-deep .p-datatable-selectable-row:hover {
+  @apply bg-[#7d8186] text-white;
+}
+
+::ng-deep .p-datatable-header {
+  @apply bg-transparent shadow-none p-0;
+}
+
+::ng-deep .p-datatable-column-sorted {
+  @apply bg-none;
+}
+
+.p-highlight {
+  @apply bg-[#7d8186] text-white;
+}
+
+::ng-deep .p-datatable .p-paginator {
+  @apply mt-3 bg-transparent border border-gray-500 w-fit mx-auto text-black dark:text-textColor-dark font-semibold;
+}
+
+::ng-deep .p-paginator-rpp-dropdown {
+  @apply bg-[#227391];
+}
+
+.p-select-label {
+  @apply bg-[#227391];
+}
+
+::ng-deep .p-paginator-page:hover {
+  @apply bg-gray-600 text-white;
+}
+
+::ng-deep .p-paginator-first:hover {
+  @apply bg-gray-600 text-white;
+}
+
+::ng-deep .p-paginator-prev:hover {
+  @apply bg-gray-600 text-white;
+}
+
+::ng-deep .p-paginator-next:hover {
+  @apply bg-gray-600 text-white;
+}
+
+::ng-deep .p-paginator-last:hover {
+  @apply bg-gray-600 text-white;
+}
+
+::ng-deep .p-paginator-page-selected {
+  @apply bg-[#227391] text-white;
+}
+
+/* ------------------------- */

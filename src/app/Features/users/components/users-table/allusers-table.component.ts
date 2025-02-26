@@ -7,8 +7,11 @@ import { ToastModule } from 'primeng/toast';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { UsersService } from '../../services/users.service';
+<<<<<<< HEAD
 import { NavbarService } from '../../../../Shared/services/navbar.service';
 import { Observable } from 'rxjs';
+=======
+>>>>>>> 490d315 (Add Category Logic)
 
 @Component({
   selector: 'app-allusers-table',
@@ -27,9 +30,7 @@ import { Observable } from 'rxjs';
 })
 export class AllUsersTableComponent {
   private usersService = inject(UsersService);
-  private navbarService = inject(NavbarService);
 
-  isDarkMode$: Observable<boolean> = this.navbarService.themeMode$;
   selectedUser: any;
 
   users = this.usersService.usersData;
@@ -39,5 +40,9 @@ export class AllUsersTableComponent {
     if (input) {
       dt2.filterGlobal(input.value, 'contains');
     }
+  }
+
+  ngOnInit() {
+    this.usersService.fetchAllUsers();
   }
 }

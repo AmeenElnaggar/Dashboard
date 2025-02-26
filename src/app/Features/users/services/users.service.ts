@@ -1,9 +1,18 @@
 import { inject, Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { StoreInterface } from '../../../Store/store';
+import { fetchAllUsersAction } from '../../../Store/actions/users.action';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
+  private store = inject(Store<StoreInterface>);
+
+  fetchAllUsers() {
+    this.store.dispatch(fetchAllUsersAction());
+  }
+
   usersData = [
     {
       name: 'Amin',

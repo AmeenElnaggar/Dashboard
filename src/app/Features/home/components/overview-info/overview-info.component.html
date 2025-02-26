@@ -1,7 +1,18 @@
 <div class="grid grid-cols-12 gap-8">
   @for (item of overviewInfo; track $index) {
-  <div class="col-span-12 md:col-span-6 xl:col-span-3">
-    <app-dashboard-itemcard [cardInfo]="item" />
+  <div
+    class="col-span-12 md:col-span-6 xl:col-span-3 sm:w-full sm:ml-0 w-[80%] ml-4"
+  >
+    <app-dashboard-itemcard [cardInfo]="item" [isInDashboardHome]="true">
+      <!-- البدي -->
+      <div class="p-4">
+        <p class="font-bold text-2xl">{{ item.value }}</p>
+        <div class="flex justify-between mt-6">
+          <a [routerLink]="[item.url]">View All</a>
+          <p>This Month</p>
+        </div>
+      </div>
+    </app-dashboard-itemcard>
   </div>
   }
 </div>

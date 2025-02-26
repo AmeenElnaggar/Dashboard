@@ -1,0 +1,11 @@
+::ng-deep .p-iconwrapper {
+  @apply text-textColor-dark;
+}
+
+::ng-deep .p-select-overlay {
+  @apply bg-textColor;
+}
+
+::ng-deep .p-select-option {
+  @apply hover:bg-gray-600;
+}
