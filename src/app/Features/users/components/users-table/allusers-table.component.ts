@@ -7,11 +7,6 @@ import { ToastModule } from 'primeng/toast';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { UsersService } from '../../services/users.service';
-<<<<<<< HEAD
-import { NavbarService } from '../../../../Shared/services/navbar.service';
-import { Observable } from 'rxjs';
-=======
->>>>>>> 490d315 (Add Category Logic)
 
 @Component({
   selector: 'app-allusers-table',

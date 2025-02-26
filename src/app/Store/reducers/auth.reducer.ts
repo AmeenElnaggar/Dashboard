@@ -22,12 +22,9 @@ export const authReducer = createReducer(
     return { ...state, authMode: authStatus };
   })
 );
-<<<<<<< HEAD
-=======
 
 /*
 
 
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2IzZWMyZTg5MTk0ZmVlYmZhN2NiMjEiLCJlbWFpbCI6InNiZW5kYXJ5OTc3QGdtYWlsLmNvbSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTc0MDU4NTkwMCwiZXhwIjoxNzcyMTIxOTAwfQ.nm7rzNayYeiLbhLr0NvlQnbEG27lu8Pr_klTPNGaC7g
 */
->>>>>>> 490d315 (Add Category Logic)
