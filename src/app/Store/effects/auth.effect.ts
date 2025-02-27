@@ -29,6 +29,9 @@ export class AuthenticationEffect {
             {
               email: loginData.email,
               password: loginData.password,
+            },
+            {
+              withCredentials: true,
             }
           )
           .pipe(

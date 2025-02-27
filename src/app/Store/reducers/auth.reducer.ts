@@ -15,6 +15,7 @@ const initialState: State = {
 export const authReducer = createReducer(
   initialState,
   on(getAuthDataAction, (state, action) => {
+    console.log(action.authData);
     return { ...state, authData: action.authData };
   }),
   on(getAuthModeAction, (state, action) => {

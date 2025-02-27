@@ -21,6 +21,7 @@ export class CategoriesEffect {
         ofType(createCategoryAction),
         tap(() => this.store.dispatch(startLoadingAction())),
         switchMap(({ categoryData }) => {
+          console.log(document.cookie);
           return this.httpClient
             .post(
               'https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/create',
