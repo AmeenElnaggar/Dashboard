@@ -117,6 +117,6 @@ export class HomeService {
         inventoryStatus: 'INSTOCK',
         rating: 4,
       },
-    ].slice(0, 5);
+    ].slice(0, 5)
   }
 }
