@@ -42,6 +42,5 @@ export class CategoryPageComponent {
 
   ngOnInit() {
     this.navbarService.navbarTitle.set('Categories');
-    this.categoryService.fetchAllCategoriesData('12', '1');
   }
 }

@@ -20,7 +20,16 @@ import { Dialog } from 'primeng/dialog';
 import { UploadedImages } from '../../models/uploadedImages.model';
 import { SpinnerService } from '../../services/spinner.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
-import { filter, map, Observable, pairwise, take } from 'rxjs';
+import {
+  filter,
+  first,
+  map,
+  Observable,
+  pairwise,
+  Subject,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { UploadService } from '../../services/upload.service';
 import { CategoryService } from '../../../Features/category/service/category.service';
 import { MessageService } from 'primeng/api';
@@ -55,11 +64,16 @@ export class UploadComponent {
           this.resetDialog();
         }
       });
+  }
 
+  ngAfterViewInit() {
     this.uploadService.dialogData$
       .pipe(filter((response) => response))
       .subscribe((response: any) => {
-        this.selectedImages.push(response.image.secure_url);
+        console.log(response);
+        if (!this.selectedImages.includes(response.image.secure_url)) {
+          this.selectedImages.push(response.image.secure_url);
+        }
         this.inputs.forEach((input) => {
           const fieldType = input.nativeElement.dataset['field'];
           switch (fieldType) {
@@ -72,6 +86,8 @@ export class UploadComponent {
           }
         });
       });
+    // this.unsubscribe$.next();
+    // this.unsubscribe$.complete();
   }
 
   onSwitchDialogMode(status: { visible: boolean; editing: boolean }) {
@@ -192,6 +208,8 @@ export class UploadComponent {
   >;
 
   @ContentChild('formSelect') selectElement!: ElementRef;
+  @ContentChildren('formSelect', { descendants: true })
+  selects!: QueryList<any>;
 
   ngAfterContentInit() {
     if (this.selectElement) {

@@ -11,13 +11,6 @@ import { SpinnerService } from '../../../../Shared/services/spinner.service';
 import { UploadService } from '../../../../Shared/services/upload.service';
 import { PaginatorModule } from 'primeng/paginator';
 
-interface PageEvent {
-  first: number;
-  rows: number;
-  page: number;
-  pageCount: number;
-}
-
 @Component({
   selector: 'app-category',
   standalone: true,
@@ -48,18 +41,18 @@ export class CategoryComponent {
     this.spinnerService.loadingMap$;
 
   first: number = 0;
-  rows: number = 10;
+  rows: number = 12; // عدد الصفح
+  page: number = 1;
 
-  onPageChange(event: PageEvent) {
+  onPageChange(event: any) {
     this.first = event.first;
+    this.page = event.page + 1;
     this.rows = event.rows;
+    this.categoryService.fetchAllCategoriesData(`${this.rows}`, `${this.page}`);
   }
 
   ngOnInit() {
-    this.allCategories$.pipe(filter((res) => res.data)).subscribe((res) => {
-      console.log(res);
-      this.first = res.pagination.currentPage;
-    });
+    this.categoryService.fetchAllCategoriesData(`${this.rows}`, `${this.page}`);
   }
 
   onDeleteCategory(categoryId: string) {

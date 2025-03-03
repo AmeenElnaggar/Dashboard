@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 export const fetchAllCategoriesAction = createAction(
   '[Categories] Send Request To Backend',
-  props<{ size: string; page: string }>()
+  props<{ size?: string; page?: string }>()
 );
 
 export const getAllCategoriesResponseAction = createAction(

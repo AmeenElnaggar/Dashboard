@@ -71,9 +71,7 @@ export class CategoriesEffect {
             .pipe(
               map((responseSuccess: any) => {
                 this.store.dispatch(stopLoadingAction({}));
-                this.store.dispatch(
-                  fetchAllCategoriesAction({ page: '', size: '' })
-                );
+                this.store.dispatch(fetchAllCategoriesAction({}));
                 this.store.dispatch(
                   switchDialogModeAction({ visible: false, isEditing: false })
                 );
