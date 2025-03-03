@@ -1,4 +1,10 @@
-import { createAction } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-export const startLoadingAction = createAction('[UI] Start Loading');
-export const stopLoadingAction = createAction('[UI] Stop Loading');
+export const startLoadingAction = createAction(
+  '[UI] Start Loading',
+  props<{ id?: string }>()
+);
+export const stopLoadingAction = createAction(
+  '[UI] Stop Loading',
+  props<{ id?: string }>()
+);

@@ -1,7 +1,7 @@
 <app-upload
   [isMultiple]="false"
   dialogTitle="Add Category"
-  (saveData)="onUploadCategory($event)"
+  (saveData)="onSaveCategory($event)"
 >
   <div class="flex flex-col gap-1 mb-5">
     <label for="name" class="text-lg font-medium">Title</label>
@@ -11,6 +11,7 @@
       class="bg-white border p-1 rounded-md w-full text-black"
       placeholder="name"
       #formInput
+      data-field="categoryName"
       [(ngModel)]="enteredName"
     />
   </div>

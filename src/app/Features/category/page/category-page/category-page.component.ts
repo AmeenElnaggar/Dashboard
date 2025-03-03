@@ -36,13 +36,12 @@ export class CategoryPageComponent {
 
   constructor() {
     this.router.events.subscribe(() => {
-      this.isSubCategoryPage = this.router.url.includes(
-        '/categories/subcategories'
-      );
+      this.isSubCategoryPage = this.router.url.includes('/subcategories');
     });
   }
 
   ngOnInit() {
     this.navbarService.navbarTitle.set('Categories');
+    this.categoryService.fetchAllCategoriesData('12', '1');
   }
 }

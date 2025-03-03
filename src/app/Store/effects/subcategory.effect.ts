@@ -16,21 +16,21 @@ import { StoreInterface } from '../store';
 import { switchDialogModeAction } from '../actions/dialog.action';
 import { SpinnerService } from '../../Shared/services/spinner.service';
 
-export class CategoriesEffect {
+export class SubCategoriesEffect {
   private actions$ = inject(Actions);
   private store = inject(Store<StoreInterface>);
   private httpClient = inject(HttpClient);
   private spinnerService = inject(SpinnerService);
 
-  getCategoriesDataEffect = createEffect(() =>
+  getSubCategoriesDataEffect = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchAllCategoriesAction),
       tap(() => this.store.dispatch(startLoadingAction({ id: 'c' }))),
 
-      switchMap(({ page, size }) => {
+      switchMap(() => {
         return this.httpClient
           .get(
-            `https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/read_all?size=${size}&page=${page}`
+            'https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/read_all?size=12'
           )
           .pipe(
             map((responseSuccess: any) => {
@@ -54,7 +54,7 @@ export class CategoriesEffect {
     )
   );
 
-  createCategoryEffect = createEffect(
+  createSubCategoryEffect = createEffect(
     () =>
       this.actions$.pipe(
         ofType(createCategoryAction),
@@ -90,7 +90,10 @@ export class CategoriesEffect {
     { dispatch: false }
   );
 
-  deleteCategoryEffect = createEffect(
+  /*
+
+
+  deleteSubCategoryEffect = createEffect(
     () =>
       this.actions$.pipe(
         ofType(deleteCategoryAction),
@@ -108,9 +111,7 @@ export class CategoriesEffect {
             .pipe(
               map((responseSuccess: any) => {
                 this.store.dispatch(stopLoadingAction({ id: categoryId }));
-                this.store.dispatch(
-                  fetchAllCategoriesAction({ page: '1', size: '1' })
-                );
+                this.store.dispatch(fetchAllCategoriesAction());
                 this.spinnerService.showMessages(responseSuccess);
               }),
               catchError((responseError: any) => {
@@ -124,7 +125,7 @@ export class CategoriesEffect {
     { dispatch: false }
   );
 
-  editCategoryEffect = createEffect(
+  editSubCategoryEffect = createEffect(
     () =>
       this.actions$.pipe(
         ofType(editCategoryAction),
@@ -147,9 +148,7 @@ export class CategoriesEffect {
                 this.store.dispatch(
                   switchDialogModeAction({ visible: false, isEditing: false })
                 );
-                this.store.dispatch(
-                  fetchAllCategoriesAction({ page: '1', size: '1' })
-                );
+                this.store.dispatch(fetchAllCategoriesAction());
               }),
               catchError((responseError: any) => {
                 this.store.dispatch(stopLoadingAction({}));
@@ -163,71 +162,5 @@ export class CategoriesEffect {
       ),
     { dispatch: false }
   );
+  */
 }
-
-/*
- createCategoryEffect = createEffect(() =>
-    this.actions$.pipe(
-      ofType(createCategoryAction),
-      tap(() => this.store.dispatch(startLoadingAction())),
-      switchMap(({ categoryData }) => {
-        console.log(categoryData);
-        const formData = new FormData();
-        formData.append('name', categoryData.name);
-        formData.append('image', categoryData.image);
-        console.log(formData);
-        return this.httpClient
-          .post(
-            'https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/create',
-            formData
-          )
-          .pipe(
-            map((responseSuccess: any) => {
-              this.store.dispatch(stopLoadingAction());
-              return getCategoryResponseAction({
-                payload: responseSuccess,
-              });
-            }),
-            catchError((responseError: any) => {
-              this.store.dispatch(stopLoadingAction());
-              return of(getCategoryResponseAction({ payload: responseError }));
-            })
-          );
-      })
-    )
-  );
-*/
-
-/*
-  createCategoryEffect = createEffect(() =>
-    this.actions$.pipe(
-      ofType(createCategoryAction),
-      tap(() => this.store.dispatch(startLoadingAction({}))),
-      switchMap(({ categoryData }) =>
-        this.httpClient
-          .post(
-            'https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/create',
-            categoryData,
-            { withCredentials: true }
-          )
-          .pipe(
-            mergeMap((responseSuccess: any) => [
-              stopLoadingAction({}),
-              fetchAllCategoriesAction(),
-              switchDialogModeAction(),
-              dialogStatusAction({ payload: responseSuccess }),
-            ]),
-            tap((responseSuccess) => {
-              this.spinnerService.showMessages(responseSuccess);
-            }),
-            catchError((responseError: any) =>
-              of(
-                stopLoadingAction({}),
-                dialogStatusAction({ payload: responseError })
-              ).pipe(tap(() => this.spinnerService.showMessages(responseError)))
-            )
-          )
-      )
-    )
-  );
-*/

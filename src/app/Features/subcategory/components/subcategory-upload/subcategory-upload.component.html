@@ -15,11 +15,9 @@
       <div>
         <Select class="select-options" #formSelect>
           <option value="" disabled selected hidden>Select a Category</option>
-          <option value="Berlin">Berlin</option>
-          <option value="Munich" class="hover:bg-black">Munich</option>
-          <option value="London">London</option>
-          <option value="Newyork">Newyork</option>
-          <option value="Paris">Paris</option>
+          @for (category of (allCategoriesData$ | async).data; track $index) {
+          <option [value]="category.name">{{ category.name }}</option>
+          }
         </Select>
       </div>
     </div>

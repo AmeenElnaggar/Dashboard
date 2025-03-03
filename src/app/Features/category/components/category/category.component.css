@@ -5,3 +5,27 @@
 .isEmpty {
   @apply flex flex-col items-center mt-52;
 }
+
+::ng-deep .p-paginator {
+  @apply bg-textColor lg:mr-[550px];
+}
+
+::ng-deep .p-paginator-rpp-dropdown {
+  @apply bg-gray-600;
+}
+
+::ng-deep .p-iconwrapper {
+  @apply text-textColor-dark;
+}
+
+::ng-deep .p-select-overlay {
+  @apply bg-textColor;
+}
+
+::ng-deep .p-select-option {
+  @apply hover:bg-gray-600;
+}
+
+::ng-deep .p-paginator-page-selected {
+  @apply bg-gray-600;
+}

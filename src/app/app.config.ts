@@ -15,6 +15,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { UsersEffect } from './Store/effects/users.effect';
 import { CategoriesEffect } from './Store/effects/category.effect';
 import { loggingInterceptor } from './Core/interceptors/auth.interceptor';
+import { MessageService } from 'primeng/api';
+import { DialogEffect } from './Store/effects/dialog.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -39,6 +41,8 @@ export const appConfig: ApplicationConfig = {
       ThemeEffect,
       UsersEffect,
       CategoriesEffect,
+      DialogEffect,
     ]),
+    MessageService,
   ],
 };

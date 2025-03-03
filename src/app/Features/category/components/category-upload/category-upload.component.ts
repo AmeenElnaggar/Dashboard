@@ -1,12 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { CategoryService } from '../../service/category.service';
 import { Dialog } from 'primeng/dialog';
-import { debounce, Observable } from 'rxjs';
+import { debounce, map, Observable, take } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { UploadComponent } from '../../../../Shared/components/upload/upload.component';
 import { FormsModule } from '@angular/forms';
 import { UploadedImages } from '../../../../Shared/models/uploadedImages.model';
+import { UploadService } from '../../../../Shared/services/upload.service';
 
 @Component({
   selector: 'app-category-upload',
@@ -24,18 +25,29 @@ import { UploadedImages } from '../../../../Shared/models/uploadedImages.model';
 })
 export class CategoryUploadComponent {
   private categoryService = inject(CategoryService);
+  private uploadService = inject(UploadService);
   enteredName = signal<string>('');
 
-  onUploadCategory(event: { imageFiles: File[] }) {
-    this.categoryService.createCategory({
-      image: event.imageFiles,
-      name: this.enteredName(),
-    });
+  onSaveCategory(event: { imageFiles: File[] }) {
+    this.uploadService.dialogMode$
+      .pipe(
+        map((response: any) => response.isEditing),
+        take(1)
+      )
+      .subscribe((response: any) => {
+        if (response) {
+          if (this.enteredName()) {
+            this.categoryService.getEnteredName(this.enteredName());
+          }
+          this.categoryService.editCategory({
+            image: event.imageFiles,
+          });
+        } else {
+          this.categoryService.getEnteredName(this.enteredName());
+          this.categoryService.createCategory({
+            image: event.imageFiles,
+          });
+        }
+      });
   }
-
-  // ngOnInit() {
-  //   this.categoryService.createdCategoriesResponse$.subscribe((res) =>
-  //     console.log(res)
-  //   );
-  // }
 }

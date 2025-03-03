@@ -3,7 +3,7 @@ import { SubcategoryUploadComponent } from '../subcategory-upload/subcategory-up
 import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { NavbarService } from '../../../../Shared/services/navbar.service';
-import { CategoryService } from '../../service/category.service';
+import { CategoryService } from '../../../category/service/category.service';
 import { DashboardItemcardComponent } from '../../../../Shared/components/dashboard-itemcard/dashboard-itemcard.component';
 
 @Component({

@@ -7,6 +7,7 @@ import { SidenavComponent } from './Core/components/sidenav/sidenav.component';
 import { DashboardTitleComponent } from './Shared/components/dashboard-title/dashboard-title.component';
 import { NavbarService } from './Shared/services/navbar.service';
 import { AuthService } from './Features/Authentication/services/auth.service';
+import { Toast } from 'primeng/toast';
 
 import { AuthData } from './Features/Authentication/model/authdata.model';
 import { LoginPageComponent } from './Features/Authentication/page/login-page/login-page.component';
@@ -21,6 +22,7 @@ import { LoginPageComponent } from './Features/Authentication/page/login-page/lo
     AsyncPipe,
     DashboardTitleComponent,
     LoginPageComponent,
+    Toast,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

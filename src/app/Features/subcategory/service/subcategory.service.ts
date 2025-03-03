@@ -8,24 +8,21 @@ import {
   editCategoryAction,
   fetchAllCategoriesAction,
 } from '../../../Store/actions/category.action';
-import { Category } from '../models/category.model';
 import { allCategoriesSelector } from '../../../Store/selectors/category.selector';
-import { SpinnerService } from '../../../Shared/services/spinner.service';
-import {
-  retriveDialogAction,
-  switchDialogModeAction,
-} from '../../../Store/actions/dialog.action';
-import { dialogDataSelector } from '../../../Store/selectors/dialog.selector';
+
 import { UploadService } from '../../../Shared/services/upload.service';
-import { spinnerOfPageUiSelector } from '../../../Store/selectors/ui.selector';
+import { allSubCategoriesSelector } from '../../../Store/selectors/subcategory.selector';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CategoryService {
+export class SubCategoryService {
   private store = inject(Store<StoreInterface>);
   private uploadService = inject(UploadService);
-  allCategories$: Observable<any> = this.store.select(allCategoriesSelector);
+
+  allSubCategories$: Observable<any> = this.store.select(
+    allSubCategoriesSelector
+  );
 
   enteredName = signal<string>('');
 
@@ -39,14 +36,12 @@ export class CategoryService {
   dialogData$ = this.uploadService.dialogData$
     .pipe(filter((response) => response))
     .subscribe((res) => {
-      this.enteredName.set(res.name);
-      this.savedImage.set(res.image.secure_url);
-      this.savedCategoryId.set(res.id);
+      console.log(res);
     });
 
-  fetchAllCategoriesData(enteredSize?: string, enteredPage?: string) {
+  fetchAllCategoriesData(enteredSize: string, enteredPage: string) {
     this.store.dispatch(
-      fetchAllCategoriesAction({ page: enteredPage!, size: enteredSize! })
+      fetchAllCategoriesAction({ page: enteredPage, size: enteredSize })
     );
   }
 

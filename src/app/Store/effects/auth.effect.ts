@@ -21,7 +21,7 @@ export class AuthenticationEffect {
   authEffect = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchAuthAction),
-      tap(() => this.store.dispatch(startLoadingAction())),
+      tap(() => this.store.dispatch(startLoadingAction({}))),
       switchMap(({ loginData }) => {
         return this.httpClient
           .post(
@@ -37,7 +37,7 @@ export class AuthenticationEffect {
           .pipe(
             mergeMap((responseSuccess: any) => {
               localStorage.setItem('Auth', responseSuccess.success);
-              this.store.dispatch(stopLoadingAction());
+              this.store.dispatch(stopLoadingAction({}));
 
               return [
                 getAuthDataAction({ authData: responseSuccess }),
@@ -45,7 +45,7 @@ export class AuthenticationEffect {
               ];
             }),
             catchError((responseError: any) => {
-              this.store.dispatch(stopLoadingAction());
+              this.store.dispatch(stopLoadingAction({}));
               return of(getAuthDataAction({ authData: responseError }));
             })
           );

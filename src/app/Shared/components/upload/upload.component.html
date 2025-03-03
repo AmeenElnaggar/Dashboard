@@ -1,6 +1,6 @@
 <div
   class="relative w-fit bg-blue-500 sm:p-10 p-7 mx-auto rounded-full transform hover:scale-110 duration-150 cursor-pointer"
-  (click)="onToggleDialog()"
+  (click)="onSwitchDialogMode({ visible: true, editing: false })"
 >
   <span
     class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 text-4xl"
@@ -8,28 +8,33 @@
   >
 </div>
 
-<p-dialog [header]="dialogTitle()" [modal]="true" [(visible)]="visible">
+<p-dialog
+  [header]="dialogTitle()"
+  [modal]="true"
+  [(visible)]="visible"
+  (onHide)="onSwitchDialogMode({ visible: false, editing: false })"
+>
   <ng-content />
 
   <div class="flex flex-col gap-10 justify-between h-[250px] items-center">
-    @if (allSelectedImages.length > 0) {
+    @if (selectedImages.length > 0) {
     <!--  الصور -->
     <div class="grid grid-cols-12 gap-x-8 gap-y-4">
-      @for (selectedImage of allSelectedImages; track $index) {
+      @for (selectedImage of selectedImages; track $index) {
       <img
         *ngIf="selectedImage"
         [src]="selectedImage"
         alt="Selected Image"
         class="h-[118px] w-[118px] object-cover rounded-lg border border-gray-300"
         [class]="{
-          'col-span-6': allSelectedImages.length >= 2,
-          'col-span-12': allSelectedImages.length === 1,
-          'h-[175px]': allSelectedImages.length === 2,
-          'w-[175px]': allSelectedImages.length === 2,
-          'mt-8': allSelectedImages.length === 2,
-          'h-[250px]': allSelectedImages.length <= 1,
-          'w-[250px]': allSelectedImages.length <= 1,
-          'mx-auto': allSelectedImages.length <= 2
+          'col-span-6': selectedImages.length >= 2,
+          'col-span-12': selectedImages.length === 1,
+          'h-[175px]': selectedImages.length === 2,
+          'w-[175px]': selectedImages.length === 2,
+          'mt-8': selectedImages.length === 2,
+          'h-[250px]': selectedImages.length <= 1,
+          'w-[250px]': selectedImages.length <= 1,
+          'mx-auto': selectedImages.length <= 2
         }"
       />
       }
@@ -46,10 +51,18 @@
   <!-- ----------------------------------------------------------------------------------- -->
 
   <!-- زرار الرفع -->
-  <div class="mt-10">
+  <div
+    class="my-12"
+    [class]="{
+      'my-[38px]': selectedImages.length === 4
+    }"
+  >
     <label
       for="upload"
       class="bg-textColor w-full flex items-center justify-center gap-x-2 text-center p-2 rounded-full text-white cursor-pointer"
+      [class]="{
+        limit: selectedImages.length === 4
+      }"
       >Upload Image <i class="pi pi-image text-yellow-100"></i
     ></label>
     <input
@@ -59,19 +72,22 @@
       (change)="onFileSelected($event)"
       accept="image/*"
       [multiple]="isMultiple()"
+      [disabled]="selectedImages.length === 4"
     />
+    @if (selectedImages.length === 4) {
+
+    <p>Note: You reach the maximum number of images .</p>
+    }
   </div>
 
   <!-- زرار الخروج او الاضافه -->
-  <div class="flex justify-around gap-2 mt-10 w-full">
+  <div class="flex justify-around gap-2 w-full">
     <button
       class="bg-red-500 p-2 rounded-lg w-full text-center text-white"
-      (click)="onToggleDialog()"
+      (click)="onSwitchDialogMode({ visible: false, editing: false })"
     >
       Cancel
     </button>
-
-    <!-- (click)="onToggleDialog()" -->
 
     <button
       class="bg-emerald-500 py-[6px] px-3 text-center text-white font-semibold rounded-md w-full flex items-center justify-center gap-x-2"
@@ -81,7 +97,7 @@
       (click)="onSave()"
       [disabled]="checkIfCanSave()"
     >
-      <span>Save</span>
+      <span>{{ (isEditing$ | async) ? "Upload" : "Save" }}</span>
       @if (isLoading$ | async) {
       <app-spinner />
       }

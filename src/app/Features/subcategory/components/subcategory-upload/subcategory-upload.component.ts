@@ -1,26 +1,25 @@
 import { Component, inject, signal } from '@angular/core';
 import { UploadComponent } from '../../../../Shared/components/upload/upload.component';
 import { UploadedImages } from '../../../../Shared/models/uploadedImages.model';
-import { CategoryService } from '../../service/category.service';
+import { CategoryService } from '../../../category/service/category.service';
 import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
-import { NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { Observable } from 'rxjs';
 
-interface City {
-  name: string;
-  code: string;
-}
 @Component({
   selector: 'app-subcategory-upload',
   standalone: true,
-  imports: [UploadComponent, FormsModule, Select, NgClass],
+  imports: [UploadComponent, FormsModule, AsyncPipe, Select, NgClass],
   templateUrl: './subcategory-upload.component.html',
   styleUrl: './subcategory-upload.component.css',
 })
 export class SubcategoryUploadComponent {
   private categoryService = inject(CategoryService);
+
+  allCategoriesData$: Observable<any> = this.categoryService.allCategories$;
+
   enteredName = signal<string>('');
-  cities: City[] | undefined;
 
   selectedCity: '' | undefined;
   onUploadCategory(event: { imagesData: UploadedImages }) {
@@ -29,15 +28,5 @@ export class SubcategoryUploadComponent {
       image: images[0],
       name: this.enteredName(),
     });
-  }
-
-  ngOnInit() {
-    this.cities = [
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' },
-    ];
   }
 }
