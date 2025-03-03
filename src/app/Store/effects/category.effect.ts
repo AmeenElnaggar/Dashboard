@@ -72,7 +72,7 @@ export class CategoriesEffect {
               map((responseSuccess: any) => {
                 this.store.dispatch(stopLoadingAction({}));
                 this.store.dispatch(
-                  fetchAllCategoriesAction({ page: '1', size: '1' })
+                  fetchAllCategoriesAction({ page: '', size: '' })
                 );
                 this.store.dispatch(
                   switchDialogModeAction({ visible: false, isEditing: false })
@@ -109,7 +109,7 @@ export class CategoriesEffect {
               map((responseSuccess: any) => {
                 this.store.dispatch(stopLoadingAction({ id: categoryId }));
                 this.store.dispatch(
-                  fetchAllCategoriesAction({ page: '1', size: '1' })
+                  fetchAllCategoriesAction({ page: '', size: '' })
                 );
                 this.spinnerService.showMessages(responseSuccess);
               }),
@@ -148,7 +148,7 @@ export class CategoriesEffect {
                   switchDialogModeAction({ visible: false, isEditing: false })
                 );
                 this.store.dispatch(
-                  fetchAllCategoriesAction({ page: '1', size: '1' })
+                  fetchAllCategoriesAction({ page: '', size: '' })
                 );
               }),
               catchError((responseError: any) => {
