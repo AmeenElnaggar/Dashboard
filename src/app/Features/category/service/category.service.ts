@@ -44,9 +44,15 @@ export class CategoryService {
       this.savedCategoryId.set(res.id);
     });
 
-  fetchAllCategoriesData(enteredSize?: string, enteredPage?: string) {
+  fetchAllCategoriesData(enteredData: {
+    enteredSize: string;
+    enteredPage: string;
+  }) {
     this.store.dispatch(
-      fetchAllCategoriesAction({ page: enteredPage!, size: enteredSize! })
+      fetchAllCategoriesAction({
+        page: enteredData.enteredPage,
+        size: enteredData.enteredSize!,
+      })
     );
   }
 
@@ -90,4 +96,24 @@ export class CategoryService {
   // ----------------------------------------------------
 
   categories = signal([1]);
+
+  private paginationKey = 'categoryPagination';
+
+  setCategoryPagination(paginationData: {
+    currentRow: number;
+    currentRows: number;
+    currentPage: number;
+  }) {
+    localStorage.setItem(this.paginationKey, JSON.stringify(paginationData));
+  }
+
+  getCategoryPagination() {
+    const storedData = localStorage.getItem(this.paginationKey);
+    if (storedData) {
+      return JSON.parse(storedData);
+    } else {
+      // القيم الافتراضية لو مفيش بيانات محفوظة
+      return { currentRow: 0, currentRows: 1, currentPage: 1 };
+    }
+  }
 }

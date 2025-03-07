@@ -21,6 +21,7 @@ import { UploadedImages } from '../../models/uploadedImages.model';
 import { SpinnerService } from '../../services/spinner.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import {
+  distinctUntilChanged,
   filter,
   first,
   map,
@@ -67,25 +68,26 @@ export class UploadComponent {
   }
 
   ngAfterViewInit() {
-    this.uploadService.dialogData$
-      .pipe(filter((response) => response))
-      .subscribe((response: any) => {
-        console.log(response);
-        if (!this.selectedImages.includes(response.image.secure_url)) {
-          this.selectedImages.push(response.image.secure_url);
-        }
-        this.inputs.forEach((input) => {
-          const fieldType = input.nativeElement.dataset['field'];
-          switch (fieldType) {
-            case 'categoryName':
-              input.nativeElement.value = response.name;
-              this.categoryService.getEnteredName(response.name);
-              break;
-            default:
-              input.nativeElement.value = '';
+    setTimeout(() => {
+      this.uploadService.dialogData$
+        .pipe(filter((response) => response))
+        .subscribe((response: any) => {
+          if (!this.selectedImages.includes(response.image.secure_url)) {
+            this.selectedImages.push(response.image.secure_url);
           }
+          this.inputs.forEach((input) => {
+            const fieldType = input.nativeElement.dataset['field'];
+            switch (fieldType) {
+              case 'categoryName':
+                input.nativeElement.value = response.name;
+                this.categoryService.getEnteredName(response.name);
+                break;
+              default:
+                input.nativeElement.value = '';
+            }
+          });
         });
-      });
+    }, 0);
     // this.unsubscribe$.next();
     // this.unsubscribe$.complete();
   }
@@ -96,7 +98,7 @@ export class UploadComponent {
 
   resetDialog() {
     this.uploadService.resetImagesData();
-    this.resetInputs();
+    this.resetForm();
   }
 
   isEditing$: Observable<boolean> = this.uploadService.dialogMode$.pipe(
@@ -207,36 +209,41 @@ export class UploadComponent {
     ElementRef<HTMLInputElement>
   >;
 
-  @ContentChild('formSelect') selectElement!: ElementRef;
   @ContentChildren('formSelect', { descendants: true })
   selects!: QueryList<any>;
 
   ngAfterContentInit() {
-    if (this.selectElement) {
-      this.selectElement.nativeElement.addEventListener(
-        'change',
-        (event: Event) => {
+    if (this.selects) {
+      this.selects.forEach((select) =>
+        select.nativeElement.addEventListener('change', (event: Event) => {
           const selectedValue = (event.target as HTMLSelectElement).value;
-        }
+        })
       );
     }
-    this.inputs.changes.subscribe(() => this.checkIfCanSave());
+    this.inputs.changes.subscribe(() => this.isFormValid());
   }
 
-  checkIfCanSave() {
+  private lastCheckResult: boolean = false;
+
+  isFormValid(): boolean {
     const allInputsFilled = this.inputs
       .toArray()
       .every((input) => input.nativeElement.value.trim() !== '');
-    return !(allInputsFilled && this.selectedImages.length > 0);
+    const allSelectsFilled = this.selects.toArray().every((select) => {
+      return select.nativeElement.value !== '';
+    });
+    const imageUploaded = this.selectedImages.length > 0;
+
+    return !(allInputsFilled && allSelectsFilled && imageUploaded);
   }
 
-  resetInputs() {
+  resetForm() {
     this.inputs.forEach((input) => {
       input.nativeElement.value = '';
     });
-    if (this.selectElement) {
-      this.selectElement.nativeElement.value = '';
-    }
+    this.selects.forEach((select) => {
+      select.nativeElement.value = '';
+    });
   }
 
   /*

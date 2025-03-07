@@ -1,11 +1,11 @@
 <div
   class="m-4"
   [ngClass]="{
-    isEmpty: categories.length === 0
+    isEmpty: (allSubCategories$ | async)?.data?.length === 0
   }"
 >
   <div>
-    @if (categories.length === 0) {
+    @if ((allSubCategories$ | async)?.data?.length === 0) {
     <p
       class="sm:mb-12 mb-6 sm:text-3xl text-xl text-textColor dark:text-textColor-dark"
     >
@@ -48,6 +48,8 @@
     </div>
 
     }
-    <app-subcategory-upload [ngClass]="{ notEmpty: categories.length > 0 }" />
+    <app-subcategory-upload
+      [ngClass]="{ notEmpty: (allSubCategories$ | async)?.data?.length !== 0 }"
+    />
   </div>
 </div>

@@ -12,6 +12,10 @@ import { allCategoriesSelector } from '../../../Store/selectors/category.selecto
 
 import { UploadService } from '../../../Shared/services/upload.service';
 import { allSubCategoriesSelector } from '../../../Store/selectors/subcategory.selector';
+import {
+  createSubCategoryAction,
+  fetchAllSubCategoriesAction,
+} from '../../../Store/actions/subcategory.action';
 
 @Injectable({
   providedIn: 'root',
@@ -25,40 +29,65 @@ export class SubCategoryService {
   );
 
   enteredName = signal<string>('');
-
   getEnteredName(name: string) {
     this.enteredName.set(name);
+  }
+
+  entredCategoryName = signal<string>('');
+  getCategoryName(name: string) {
+    this.entredCategoryName.set(name);
+  }
+
+  entredCategoryId = signal<string>('');
+  getCategoryId(id: string) {
+    this.entredCategoryId.set(id);
   }
 
   savedImage = signal<string>('');
   savedCategoryId = signal<string>('');
 
-  dialogData$ = this.uploadService.dialogData$
-    .pipe(filter((response) => response))
-    .subscribe((res) => {
-      console.log(res);
-    });
+  // dialogData$ = this.uploadService.dialogData$
+  //   .pipe(filter((response) => response))
+  //   .subscribe((res) => {
+  //     console.log(res);
+  //   });
 
-  fetchAllCategoriesData(enteredSize: string, enteredPage: string) {
-    this.store.dispatch(
-      fetchAllCategoriesAction({ page: enteredPage, size: enteredSize })
-    );
+  fetchAllSubCategoriesData(subCategoriesData: {
+    enteredSize: string;
+    enteredPage: string;
+    categoryName: string;
+  }) {
+    console.log(this.entredCategoryId());
+    console.log(subCategoriesData);
+    // this.store.dispatch(
+    //   fetchAllSubCategoriesAction({
+    //     page: subCategoriesData.enteredPage,
+    //     size: subCategoriesData.enteredSize,
+    //     categoyName: subCategoriesData.categoryName,
+    //   })
+    // );
   }
 
-  createCategory(enteredImages: any) {
+  createSubCategory(enteredImages: any) {
     const formData = new FormData();
     formData.append('name', this.enteredName());
+    formData.append('categoryName', this.entredCategoryName());
     if (enteredImages.image) {
       formData.append('image', enteredImages.image[0]);
     }
-    this.store.dispatch(createCategoryAction({ categoryData: formData }));
+    this.store.dispatch(
+      createSubCategoryAction({
+        subCategoryData: formData,
+        categoryId: this.entredCategoryId(),
+      })
+    );
   }
 
   deleteCategory(id: string) {
     this.store.dispatch(deleteCategoryAction({ categoryId: id }));
   }
 
-  async editCategory(enteredImage: any) {
+  async editSubCategory(enteredImage: any) {
     if (!enteredImage.image || enteredImage.image.length === 0) {
       enteredImage.image = [
         await this.uploadService.urlToFile(

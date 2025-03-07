@@ -9,7 +9,7 @@ const initialState: State = {
   allSubCategories: [],
 };
 
-export const categoryReducer = createReducer(
+export const subCategoryReducer = createReducer(
   initialState,
   on(getAllSubCategoriesResponseAction, (state, action) => {
     return { ...state, allSubCategories: action.payload };

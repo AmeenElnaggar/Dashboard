@@ -1,7 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 
 export const fetchAllSubCategoriesAction = createAction(
-  '[SubCategories] Send Request To Backend'
+  '[SubCategories] Send Request To Backend',
+  props<{ size?: string; page?: string; categoyName?: string }>()
 );
 
 export const getAllSubCategoriesResponseAction = createAction(
@@ -11,7 +12,7 @@ export const getAllSubCategoriesResponseAction = createAction(
 
 export const createSubCategoryAction = createAction(
   '[SubCategories] Create SubCategory',
-  props<{ subCategoryData: FormData }>()
+  props<{ subCategoryData: FormData; categoryId: string }>()
 );
 
 export const deleteSubCategoryAction = createAction(

@@ -3,8 +3,9 @@ import * as fromSidenav from './reducers/sidenav.reducer';
 import * as fromTheme from './reducers/theme.reducer';
 import * as fromAuthentication from './reducers/auth.reducer';
 import * as fromUi from './reducers/ui.reducer';
-import * as fromCategories from './reducers/category.reducer';
 import * as fromDialog from './reducers/dialog.reducer';
+import * as fromCategories from './reducers/category.reducer';
+import * as fromSubCategories from './reducers/subcategory.reducer';
 
 export interface StoreInterface {
   sidenav: fromSidenav.State;
@@ -13,6 +14,7 @@ export interface StoreInterface {
   ui: fromUi.State;
   dialog: fromDialog.State;
   categories: fromCategories.State;
+  subCategories: fromSubCategories.State;
 }
 
 export const reducers: ActionReducerMap<StoreInterface> = {
@@ -22,4 +24,5 @@ export const reducers: ActionReducerMap<StoreInterface> = {
   ui: fromUi.uiReducer,
   dialog: fromDialog.dialogReducer,
   categories: fromCategories.categoryReducer,
+  subCategories: fromSubCategories.subCategoryReducer,
 };

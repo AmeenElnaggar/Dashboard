@@ -40,6 +40,7 @@
                 <a
                   [routerLink]="['/categories', category.name, 'subcategories']"
                   class="text-lg flex items-center gap-x-2 group"
+                  (click)="onGetCategoryId(category.id)"
                 >
                   <span>Sub Categories</span>
                   <i

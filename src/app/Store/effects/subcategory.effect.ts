@@ -15,6 +15,11 @@ import { startLoadingAction, stopLoadingAction } from '../actions/ui.action';
 import { StoreInterface } from '../store';
 import { switchDialogModeAction } from '../actions/dialog.action';
 import { SpinnerService } from '../../Shared/services/spinner.service';
+import {
+  createSubCategoryAction,
+  fetchAllSubCategoriesAction,
+  getAllSubCategoriesResponseAction,
+} from '../actions/subcategory.action';
 
 export class SubCategoriesEffect {
   private actions$ = inject(Actions);
@@ -24,27 +29,28 @@ export class SubCategoriesEffect {
 
   getSubCategoriesDataEffect = createEffect(() =>
     this.actions$.pipe(
-      ofType(fetchAllCategoriesAction),
-      tap(() => this.store.dispatch(startLoadingAction({ id: 'c' }))),
+      ofType(fetchAllSubCategoriesAction),
+      tap(() => this.store.dispatch(startLoadingAction({}))),
 
-      switchMap(() => {
+      switchMap(({ page, size, categoyName }) => {
+        const formData = new FormData();
+        formData.append('name', categoyName!);
         return this.httpClient
           .get(
-            'https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/read_all?size=12'
+            `https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/read_all?size=${size}&page=${page}`
           )
           .pipe(
             map((responseSuccess: any) => {
-              this.store.dispatch(stopLoadingAction({ id: 'c' }));
-
-              return getAllCategoriesResponseAction({
+              this.store.dispatch(stopLoadingAction({}));
+              return getAllSubCategoriesResponseAction({
                 payload: responseSuccess,
               });
             }),
             catchError((responseError: any) => {
-              this.store.dispatch(stopLoadingAction({ id: 'c' }));
+              this.store.dispatch(stopLoadingAction({}));
 
               return of(
-                getAllCategoriesResponseAction({
+                getAllSubCategoriesResponseAction({
                   payload: responseError,
                 })
               );
@@ -57,13 +63,13 @@ export class SubCategoriesEffect {
   createSubCategoryEffect = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(createCategoryAction),
+        ofType(createSubCategoryAction),
         tap(() => this.store.dispatch(startLoadingAction({}))),
-        switchMap(({ categoryData }) => {
+        switchMap(({ subCategoryData, categoryId }) => {
           return this.httpClient
             .post(
-              'https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/create',
-              categoryData,
+              `https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/${categoryId}/subcategory`,
+              subCategoryData,
               {
                 withCredentials: true,
               }
@@ -71,15 +77,15 @@ export class SubCategoriesEffect {
             .pipe(
               map((responseSuccess: any) => {
                 this.store.dispatch(stopLoadingAction({}));
-                this.store.dispatch(
-                  fetchAllCategoriesAction({ page: '1', size: '1' })
-                );
+                this.store.dispatch(fetchAllSubCategoriesAction({}));
+                console.log(responseSuccess);
                 this.store.dispatch(
                   switchDialogModeAction({ visible: false, isEditing: false })
                 );
                 this.spinnerService.showMessages(responseSuccess);
               }),
               catchError((responseError: any) => {
+                console.log(responseError);
                 this.spinnerService.showMessages(responseError);
                 this.store.dispatch(stopLoadingAction({}));
                 return '';

@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -17,12 +17,13 @@ import { CategoriesEffect } from './Store/effects/category.effect';
 import { loggingInterceptor } from './Core/interceptors/auth.interceptor';
 import { MessageService } from 'primeng/api';
 import { DialogEffect } from './Store/effects/dialog.effect';
+import { SubCategoriesEffect } from './Store/effects/subcategory.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
@@ -40,8 +41,9 @@ export const appConfig: ApplicationConfig = {
       AuthenticationEffect,
       ThemeEffect,
       UsersEffect,
-      CategoriesEffect,
       DialogEffect,
+      CategoriesEffect,
+      SubCategoriesEffect,
     ]),
     MessageService,
   ],

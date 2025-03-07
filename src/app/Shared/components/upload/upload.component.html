@@ -92,10 +92,10 @@
     <button
       class="bg-emerald-500 py-[6px] px-3 text-center text-white font-semibold rounded-md w-full flex items-center justify-center gap-x-2"
       [class]="{
-        'bg-gray-500': checkIfCanSave()
+        'bg-gray-500': isFormValid()
       }"
       (click)="onSave()"
-      [disabled]="checkIfCanSave()"
+      [disabled]="isFormValid()"
     >
       <span>{{ (isEditing$ | async) ? "Upload" : "Save" }}</span>
       @if (isLoading$ | async) {
