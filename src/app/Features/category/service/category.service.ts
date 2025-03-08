@@ -1,7 +1,7 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { StoreInterface } from '../../../Store/store';
-import { filter, Observable } from 'rxjs';
+import { filter, first, Observable } from 'rxjs';
 import {
   createCategoryAction,
   deleteCategoryAction,
@@ -18,6 +18,7 @@ import {
 import { dialogDataSelector } from '../../../Store/selectors/dialog.selector';
 import { UploadService } from '../../../Shared/services/upload.service';
 import { spinnerOfPageUiSelector } from '../../../Store/selectors/ui.selector';
+import { Pagination } from '../../../Shared/models/pagination.model';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,6 @@ export class CategoryService {
   allCategories$: Observable<any> = this.store.select(allCategoriesSelector);
 
   enteredName = signal<string>('');
-
   getEnteredName(name: string) {
     this.enteredName.set(name);
   }
@@ -91,29 +91,27 @@ export class CategoryService {
     );
   }
 
-  // استخدام الفانكشن
-
   // ----------------------------------------------------
 
   categories = signal([1]);
 
-  private paginationKey = 'categoryPagination';
+  getCategoryPagination() {
+    let pagination: any = localStorage.getItem('Category-Pagination');
+    pagination = pagination
+      ? JSON.parse(pagination)
+      : { currentPage: 1, currentRows: 12, first: 0 };
 
-  setCategoryPagination(paginationData: {
-    currentRow: number;
-    currentRows: number;
-    currentPage: number;
-  }) {
-    localStorage.setItem(this.paginationKey, JSON.stringify(paginationData));
+    return pagination;
   }
 
-  getCategoryPagination() {
-    const storedData = localStorage.getItem(this.paginationKey);
-    if (storedData) {
-      return JSON.parse(storedData);
-    } else {
-      // القيم الافتراضية لو مفيش بيانات محفوظة
-      return { currentRow: 0, currentRows: 1, currentPage: 1 };
-    }
+  setCategoryPagination(paginationData: Pagination) {
+    localStorage.setItem(
+      'Category-Pagination',
+      JSON.stringify({
+        currentPage: paginationData.currentPage,
+        currentRows: paginationData.currentRows,
+        first: paginationData.first,
+      })
+    );
   }
 }

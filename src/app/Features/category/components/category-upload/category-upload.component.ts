@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { CategoryService } from '../../service/category.service';
 import { Dialog } from 'primeng/dialog';
 import { debounce, map, Observable, take } from 'rxjs';
@@ -26,7 +26,20 @@ import { UploadService } from '../../../../Shared/services/upload.service';
 export class CategoryUploadComponent {
   private categoryService = inject(CategoryService);
   private uploadService = inject(UploadService);
+  private destroyRef = inject(DestroyRef);
   enteredName = signal<string>('');
+  dialogTitle: string = '';
+
+  ngOnInit() {
+    const subscribtion = this.uploadService.dialogMode$
+      .pipe(
+        map((response: any) =>
+          response.isEditing ? 'Edit Category' : 'Add Category'
+        )
+      )
+      .subscribe((response) => (this.dialogTitle = response));
+    this.destroyRef.onDestroy(() => subscribtion.unsubscribe());
+  }
 
   onSaveCategory(event: { imageFiles: File[] }) {
     this.uploadService.dialogMode$
@@ -50,4 +63,11 @@ export class CategoryUploadComponent {
         }
       });
   }
+
+  // onSaveCategory(event: { imageFiles: File[] }) {
+  //   this.categoryService.getEnteredName(this.enteredName());
+  //   this.categoryService.createCategory({
+  //     image: event.imageFiles,
+  //   });
+  // }
 }

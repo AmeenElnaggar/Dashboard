@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { StoreInterface } from '../../Store/store';
 import {
+  clearDialogDataAction,
   retriveDialogAction,
   switchDialogModeAction,
 } from '../../Store/actions/dialog.action';
@@ -24,9 +25,6 @@ export class UploadService {
     ); // 2 DM
   }
 
-  isEditing$: Observable<boolean> = this.dialogMode$.pipe(
-    map((response: any) => response.isEditing)
-  );
   dialogData$: Observable<any> = this.store.select(dialogDataSelector);
 
   // ------------------------------------------
@@ -60,6 +58,10 @@ export class UploadService {
 
   retriveDialogData(enteredData: Category) {
     this.store.dispatch(retriveDialogAction({ loadedData: enteredData }));
+  }
+
+  clearDialogData() {
+    this.store.dispatch(clearDialogDataAction());
   }
 
   async urlToFile(url: string, filename: string, mimeType: string) {

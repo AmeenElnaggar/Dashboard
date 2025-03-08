@@ -14,3 +14,5 @@ export const getDialogDataAction = createAction(
   '[Dialog] Get Dialog Data',
   props<{ data: any }>()
 );
+
+export const clearDialogDataAction = createAction('[Dialog] Clear Data');

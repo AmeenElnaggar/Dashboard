@@ -1,4 +1,5 @@
-.notEmpty {
+/*
+ .notEmpty {
   @apply absolute bottom-20 right-20;
 }
 
@@ -8,6 +9,39 @@
 
 ::ng-deep .p-paginator {
   @apply bg-textColor lg:mr-[670px];
+}
+
+::ng-deep .p-paginator-rpp-dropdown {
+  @apply bg-gray-600;
+}
+
+::ng-deep .p-iconwrapper {
+  @apply text-textColor-dark;
+}
+
+::ng-deep .p-select-overlay {
+  @apply bg-textColor;
+}
+
+::ng-deep .p-select-option {
+  @apply hover:bg-gray-600;
+}
+
+::ng-deep .p-paginator-page-selected {
+  @apply bg-gray-600;
+}
+   */
+
+.notEmpty {
+  @apply absolute bottom-0 right-20 -mr-24 sm:-mr-12;
+}
+
+.isEmpty {
+  @apply flex flex-col items-center mt-52;
+}
+
+::ng-deep .p-paginator {
+  @apply bg-textColor w-fit mt-10 lg:mt-20 -ml-1 sm:mx-auto;
 }
 
 ::ng-deep .p-paginator-rpp-dropdown {

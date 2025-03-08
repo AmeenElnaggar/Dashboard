@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import {
+  clearDialogDataAction,
   getDialogDataAction,
   switchDialogModeAction,
 } from '../actions/dialog.action';
@@ -26,5 +27,9 @@ export const dialogReducer = createReducer(
       ...state,
       dialogData: { ...action.data, _timestamp: Date.now() },
     };
-  })
+  }),
+  on(clearDialogDataAction, (state) => ({
+    ...state,
+    dialogData: null,
+  }))
 );

@@ -12,7 +12,7 @@
 </p>
 }@else {
 <div
-  class="m-4"
+  class="m-4 relative"
   [ngClass]="{
     isEmpty: (allCategories$ | async).data.length === 0
   }"
@@ -74,7 +74,26 @@
 
     }
   </div>
-  <div
+
+  <div>
+    @if ((allCategories$ | async).data.length !== 0) {
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="(allCategories$ | async).pagination.count"
+    />
+    }
+    <div [ngClass]="{ notEmpty: (allCategories$ | async).data.length !== 0 }">
+      <app-category-upload />
+    </div>
+  </div>
+</div>
+}
+
+<!--
+
+    <div
     class="flex items-center relative"
     [ngClass]="{ notEmpty: (allCategories$ | async).data.length !== 0 }"
   >
@@ -87,6 +106,4 @@
     />
     }
     <app-category-upload />
-  </div>
-</div>
-}
+  </div> -->

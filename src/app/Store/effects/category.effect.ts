@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { DestroyRef, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   createCategoryAction,
@@ -23,6 +23,7 @@ export class CategoriesEffect {
   private httpClient = inject(HttpClient);
   private spinnerService = inject(SpinnerService);
   private categoryService = inject(CategoryService);
+  private destroyRef = inject(DestroyRef);
 
   getCategoriesDataEffect = createEffect(() =>
     this.actions$.pipe(
@@ -58,33 +59,35 @@ export class CategoriesEffect {
       this.actions$.pipe(
         ofType(createCategoryAction),
         tap(() => this.store.dispatch(startLoadingAction({}))),
-
         switchMap(({ categoryData }) => {
+          const pagination = this.categoryService.getCategoryPagination();
           return this.httpClient
             .post(
               'https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/create',
               categoryData,
-              { withCredentials: true }
+              {
+                withCredentials: true,
+              }
             )
             .pipe(
               tap((responseSuccess: any) => {
                 this.store.dispatch(stopLoadingAction({}));
-                const pagination = this.categoryService.getCategoryPagination();
-                const currentTotalItems = pagination.totalItems + 1;
-                const totalPages = Math.ceil(
-                  currentTotalItems / pagination.currentRow
-                );
-                let newPage = pagination.currentPage;
-                if (
-                  pagination.currentPage === totalPages - 1 &&
-                  pagination.totalItems % pagination.currentRow === 0
-                ) {
-                  newPage = totalPages;
-                }
+
+                // let currentTotalItems: number = 0;
+                // const subscribtion =
+                //   this.categoryService.allCategories$.subscribe((res) => {
+                //     currentTotalItems = res.pagination.count + 1;
+                //   });
+                // this.destroyRef.onDestroy(() => subscribtion.unsubscribe());
+
+                // let totalPages = Math.ceil(
+                //   currentTotalItems / pagination.currentRows
+                // );
+                // console.log(totalPages);
                 this.store.dispatch(
                   fetchAllCategoriesAction({
-                    page: newPage,
-                    size: pagination.currentRow,
+                    page: pagination.currentPage,
+                    size: pagination.currentRows,
                   })
                 );
                 this.store.dispatch(
@@ -93,8 +96,8 @@ export class CategoriesEffect {
                 this.spinnerService.showMessages(responseSuccess);
               }),
               catchError((responseError: any) => {
-                this.store.dispatch(stopLoadingAction({}));
                 this.spinnerService.showMessages(responseError);
+                this.store.dispatch(stopLoadingAction({}));
                 return of();
               })
             );
@@ -123,18 +126,26 @@ export class CategoriesEffect {
             .pipe(
               tap((responseSuccess: any) => {
                 this.store.dispatch(stopLoadingAction({ id: categoryId }));
-                const currentTotalItems = pagination.totalItems - 1;
+
+                let currentTotalItems: number = 0;
+                const subscribtion =
+                  this.categoryService.allCategories$.subscribe((res) => {
+                    currentTotalItems = res.pagination.count - 1;
+                  });
+                this.destroyRef.onDestroy(() => subscribtion.unsubscribe());
+
                 const totalPages = Math.ceil(
-                  currentTotalItems / pagination.currentRow
+                  currentTotalItems / pagination.currentRows
                 );
                 let newPage = pagination.currentPage;
                 if (pagination.currentPage > totalPages) {
                   newPage = Math.max(totalPages, 1);
                 }
+
                 this.store.dispatch(
                   fetchAllCategoriesAction({
                     page: newPage,
-                    size: pagination.currentRow,
+                    size: pagination.currentRows,
                   })
                 );
                 this.spinnerService.showMessages(responseSuccess);
@@ -155,9 +166,7 @@ export class CategoriesEffect {
       this.actions$.pipe(
         ofType(editCategoryAction),
         tap(() => this.store.dispatch(startLoadingAction({}))),
-
         switchMap(({ categoryData, id }) => {
-          console.log(id);
           return this.httpClient
             .patch(
               `https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/update_one/${id}`,
@@ -174,7 +183,6 @@ export class CategoriesEffect {
                   switchDialogModeAction({ visible: false, isEditing: false })
                 );
                 const pagination = this.categoryService.getCategoryPagination();
-                console.log(pagination);
                 this.store.dispatch(
                   fetchAllCategoriesAction({
                     page: pagination.currentPage,

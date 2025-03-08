@@ -40,6 +40,7 @@ export class CategoryComponent {
   private subCategoryService = inject(SubCategoryService);
 
   allCategories$: Observable<any> = this.categoryService.allCategories$;
+  allCategories: any = [];
 
   pageLoading$: Observable<boolean> = this.spinnerService.pageLoading$;
 
@@ -49,45 +50,46 @@ export class CategoryComponent {
 
   first: number = 0;
   rows: number = 1;
-  page: number = 1;
+  currentPage: number = 1;
 
   ngOnInit() {
     const pagination = this.categoryService.getCategoryPagination();
+    this.first = pagination.first;
+    this.rows = pagination.currentRows;
+    this.currentPage = pagination.currentPage;
 
-    if (pagination) {
-      this.first = pagination.currentRow;
-      this.rows = pagination.currentRows;
-      this.page = pagination.currentPage;
-    }
+    this.categoryService.allCategories$.subscribe((res) => {
+      this.allCategories = res;
+      console.log(this.allCategories);
+    });
 
     this.categoryService.fetchAllCategoriesData({
-      enteredSize: `${this.rows}`,
-      enteredPage: `${this.page}`,
+      enteredSize: `${pagination.currentRows}`,
+      enteredPage: `${pagination.currentPage}`,
     });
   }
 
   onPageChange(event: any) {
     this.first = event.first;
-    this.page = event.page + 1;
+    this.currentPage = event.page + 1;
     this.rows = event.rows;
-
     this.categoryService.setCategoryPagination({
-      currentRow: this.first,
+      currentPage: this.currentPage,
+      first: this.first,
       currentRows: this.rows,
-      currentPage: this.page,
     });
-
     this.categoryService.fetchAllCategoriesData({
       enteredSize: `${this.rows}`,
-      enteredPage: `${this.page}`,
+      enteredPage: `${this.currentPage}`,
     });
-  }
-  onDeleteCategory(categoryId: string) {
-    this.categoryService.deleteCategory(categoryId);
   }
 
   onEditCategory(data: any) {
     this.uploadService.retriveDialogData(data);
+  }
+
+  onDeleteCategory(categoryId: string) {
+    this.categoryService.deleteCategory(categoryId);
   }
 
   onGetCategoryId(id: string) {
