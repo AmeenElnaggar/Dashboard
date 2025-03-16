@@ -25,4 +25,4 @@ export const reducers: ActionReducerMap<StoreInterface> = {
   dialog: fromDialog.dialogReducer,
   categories: fromCategories.categoryReducer,
   subCategories: fromSubCategories.subCategoryReducer,
-};
+}
