@@ -33,3 +33,13 @@ export const getEditedCategoryResponseAction = createAction(
 );
 
 // -----------------------------------
+
+export const searchCategoryAction = createAction(
+  '[Categories] Search for Specific Category',
+  props<{ searchKey: string }>()
+);
+
+export const getSearchCategoryResponseAction = createAction(
+  '[Categories] Get Search Category Data',
+  props<{ payload: any }>()
+);

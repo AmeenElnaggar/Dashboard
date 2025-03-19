@@ -10,12 +10,13 @@ import { DashboardItemcardComponent } from '../../../../Shared/components/dashbo
 import { NavbarService } from '../../../../Shared/services/navbar.service';
 import { CategoryService } from '../../service/category.service';
 import { CategoryUploadComponent } from '../category-upload/category-upload.component';
-import { filter, map, Observable } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable } from 'rxjs';
 import { SpinnerComponent } from '../../../../Shared/components/spinner/spinner.component';
 import { SpinnerService } from '../../../../Shared/services/spinner.service';
 import { UploadService } from '../../../../Shared/services/upload.service';
 import { PaginatorModule } from 'primeng/paginator';
 import { SubCategoryService } from '../../../subcategory/service/subcategory.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-category',
@@ -29,6 +30,7 @@ import { SubCategoryService } from '../../../subcategory/service/subcategory.ser
     SpinnerComponent,
     NgIf,
     PaginatorModule,
+    FormsModule,
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',
@@ -39,8 +41,7 @@ export class CategoryComponent {
   private uploadService = inject(UploadService);
   private subCategoryService = inject(SubCategoryService);
 
-  allCategories$: Observable<any> = this.categoryService.allCategories$;
-  allCategories: any = [];
+  allCategories$: Observable<any> = this.categoryService.filterdCategories$;
 
   pageLoading$: Observable<boolean> = this.spinnerService.pageLoading$;
 
@@ -57,11 +58,6 @@ export class CategoryComponent {
     this.first = pagination.first;
     this.rows = pagination.currentRows;
     this.currentPage = pagination.currentPage;
-
-    this.categoryService.allCategories$.subscribe((res) => {
-      this.allCategories = res;
-      console.log(this.allCategories);
-    });
 
     this.categoryService.fetchAllCategoriesData({
       enteredSize: `${pagination.currentRows}`,
@@ -94,5 +90,9 @@ export class CategoryComponent {
 
   onGetCategoryId(id: string) {
     this.subCategoryService.getCategoryId(id);
+  }
+
+  onSearchChange(event: any) {
+    this.categoryService.searchCategory(event.target.value);
   }
 }

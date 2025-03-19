@@ -7,6 +7,8 @@ import {
   fetchAllCategoriesAction,
   getAllCategoriesResponseAction,
   getEditedCategoryResponseAction,
+  getSearchCategoryResponseAction,
+  searchCategoryAction,
 } from '../actions/category.action';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -130,6 +132,7 @@ export class CategoriesEffect {
                 let currentTotalItems: number = 0;
                 const subscribtion =
                   this.categoryService.allCategories$.subscribe((res) => {
+                    console.log(res);
                     currentTotalItems = res.pagination.count - 1;
                   });
                 this.destroyRef.onDestroy(() => subscribtion.unsubscribe());
@@ -141,6 +144,7 @@ export class CategoriesEffect {
                 if (pagination.currentPage > totalPages) {
                   newPage = Math.max(totalPages, 1);
                 }
+                console.log(newPage);
 
                 this.store.dispatch(
                   fetchAllCategoriesAction({
@@ -199,5 +203,32 @@ export class CategoriesEffect {
         })
       ),
     { dispatch: false }
+  );
+
+  searchCategoryEffect = createEffect(() =>
+    this.actions$.pipe(
+      ofType(searchCategoryAction),
+      switchMap(({ searchKey }) => {
+        const pagination = this.categoryService.getCategoryPagination();
+        return this.httpClient
+          .get(
+            `https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/read_all?size=${pagination.currentRows}&search=${searchKey}`
+          )
+          .pipe(
+            map((responseSuccess: any) => {
+              return getSearchCategoryResponseAction({
+                payload: responseSuccess,
+              });
+            }),
+            catchError((responseError: any) => {
+              return of(
+                getSearchCategoryResponseAction({
+                  payload: responseError,
+                })
+              );
+            })
+          );
+      })
+    )
   );
 }

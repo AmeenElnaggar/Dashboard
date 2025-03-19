@@ -1,15 +1,26 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { StoreInterface } from '../../../Store/store';
-import { filter, first, Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  filter,
+  first,
+  map,
+  Observable,
+} from 'rxjs';
 import {
   createCategoryAction,
   deleteCategoryAction,
   editCategoryAction,
   fetchAllCategoriesAction,
+  searchCategoryAction,
 } from '../../../Store/actions/category.action';
 import { Category } from '../models/category.model';
-import { allCategoriesSelector } from '../../../Store/selectors/category.selector';
+import {
+  allCategoriesSelector,
+  searchCategoriesSelector,
+} from '../../../Store/selectors/category.selector';
 import { SpinnerService } from '../../../Shared/services/spinner.service';
 import {
   retriveDialogAction,
@@ -27,6 +38,22 @@ export class CategoryService {
   private store = inject(Store<StoreInterface>);
   private uploadService = inject(UploadService);
   allCategories$: Observable<any> = this.store.select(allCategoriesSelector);
+  searchCategories$: Observable<any> = this.store.select(
+    searchCategoriesSelector
+  );
+
+  filterdCategories$: Observable<any> = combineLatest([
+    this.allCategories$,
+    this.searchCategories$,
+  ]).pipe(
+    map(([categories, searchCategories]) => {
+      return searchCategories.data ? searchCategories : categories;
+    })
+  );
+
+  // searchValue(value: string) {
+  //   this.searchSubject.next(value);
+  // }
 
   enteredName = signal<string>('');
   getEnteredName(name: string) {
@@ -99,7 +126,7 @@ export class CategoryService {
     let pagination: any = localStorage.getItem('Category-Pagination');
     pagination = pagination
       ? JSON.parse(pagination)
-      : { currentPage: 1, currentRows: 12, first: 0 };
+      : { currentPage: 1, currentRows: 1, first: 0 };
 
     return pagination;
   }
@@ -113,5 +140,9 @@ export class CategoryService {
         first: paginationData.first,
       })
     );
+  }
+
+  searchCategory(value: string) {
+    this.store.dispatch(searchCategoryAction({ searchKey: value }));
   }
 }
