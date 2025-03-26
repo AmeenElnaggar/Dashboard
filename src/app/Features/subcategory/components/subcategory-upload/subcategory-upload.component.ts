@@ -26,7 +26,6 @@ export class SubcategoryUploadComponent {
   private categoryService = inject(CategoryService);
   private subCategoryService = inject(SubCategoryService);
   private uploadService = inject(UploadService);
-  enteredCategory = viewChild<ElementRef<HTMLSelectElement>>('formSelect');
 
   allCategoriesData$: Observable<any> = this.categoryService.allCategories$;
 
@@ -39,19 +38,13 @@ export class SubcategoryUploadComponent {
       )
       .subscribe((response: any) => {
         if (response) {
-          if (this.enteredName() && this.enteredCategory()) {
-            this.subCategoryService.getCategoryName(
-              this.enteredCategory()!.nativeElement.value
-            );
+          if (this.enteredName()) {
             this.subCategoryService.getEnteredName(this.enteredName());
           }
           this.subCategoryService.editSubCategory({
             image: event.imageFiles,
           });
         } else {
-          this.subCategoryService.getCategoryName(
-            this.enteredCategory()!.nativeElement.value
-          );
           this.subCategoryService.getEnteredName(this.enteredName());
           this.subCategoryService.createSubCategory({
             image: event.imageFiles,

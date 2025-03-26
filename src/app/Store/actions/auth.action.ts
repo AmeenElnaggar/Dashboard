@@ -18,3 +18,7 @@ export const getAuthModeAction = createAction(
   '[Authentication] Get User Mode',
   props<{ mode: boolean }>()
 );
+
+export const refreshAction = createAction(
+  '[Authentication] Refresh Access Token'
+);

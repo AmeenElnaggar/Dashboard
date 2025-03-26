@@ -36,7 +36,7 @@ export const getEditedCategoryResponseAction = createAction(
 
 export const searchCategoryAction = createAction(
   '[Categories] Search for Specific Category',
-  props<{ searchKey: string }>()
+  props<{ searchKey: string; currentPage: string }>()
 );
 
 export const getSearchCategoryResponseAction = createAction(

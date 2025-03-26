@@ -7,6 +7,7 @@ import {
   fetchAuthAction,
   getAuthDataAction,
   getAuthModeAction,
+  refreshAction,
 } from '../actions/auth.action';
 import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -51,5 +52,27 @@ export class AuthenticationEffect {
           );
       })
     )
+  );
+
+  refreshEffect = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(refreshAction),
+        switchMap(() =>
+          this.httpClient
+            .get(
+              'https://clothingapp-production-681d.up.railway.app/api/v1/auth/refresh_token',
+              { withCredentials: true }
+            )
+            .pipe(
+              tap((res) => console.log('Success', res)),
+              catchError((error: any) => {
+                console.log('Error', error);
+                return '';
+              })
+            )
+        )
+      ),
+    { dispatch: false }
   );
 }

@@ -40,7 +40,6 @@ export class SubCategoryService {
 
   entredCategoryId = signal<string>('');
   getCategoryId(id: string) {
-    console.log(id);
     this.entredCategoryId.set(id);
   }
 

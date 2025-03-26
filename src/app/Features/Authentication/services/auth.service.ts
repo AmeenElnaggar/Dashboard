@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import {
   fetchAuthAction,
   getAuthModeAction,
+  refreshAction,
 } from '../../../Store/actions/auth.action';
 import {
   authDataSelector,
@@ -56,5 +57,9 @@ export class AuthService {
   submitLogout() {
     localStorage.removeItem('Auth');
     this.store.dispatch(getAuthModeAction({ mode: false }));
+  }
+
+  refreshToken() {
+    this.store.dispatch(refreshAction());
   }
 }

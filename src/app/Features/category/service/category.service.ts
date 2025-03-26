@@ -37,6 +37,9 @@ import { Pagination } from '../../../Shared/models/pagination.model';
 export class CategoryService {
   private store = inject(Store<StoreInterface>);
   private uploadService = inject(UploadService);
+
+  searchValue: string = '';
+
   allCategories$: Observable<any> = this.store.select(allCategoriesSelector);
   searchCategories$: Observable<any> = this.store.select(
     searchCategoriesSelector
@@ -47,7 +50,9 @@ export class CategoryService {
     this.searchCategories$,
   ]).pipe(
     map(([categories, searchCategories]) => {
-      return searchCategories.data ? searchCategories : categories;
+      return searchCategories.data && this.searchValue !== ''
+        ? searchCategories
+        : categories;
     })
   );
 
@@ -142,7 +147,13 @@ export class CategoryService {
     );
   }
 
-  searchCategory(value: string) {
-    this.store.dispatch(searchCategoryAction({ searchKey: value }));
+  searchCategory(searchData: { value: string; page: string }) {
+    this.searchValue = searchData.value;
+    this.store.dispatch(
+      searchCategoryAction({
+        searchKey: searchData.value,
+        currentPage: searchData.page,
+      })
+    );
   }
 }

@@ -1,7 +1,7 @@
 import { Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './Core/components/navbar/navbar.component';
-import { Observable } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { SidenavComponent } from './Core/components/sidenav/sidenav.component';
 import { DashboardTitleComponent } from './Shared/components/dashboard-title/dashboard-title.component';
@@ -41,6 +41,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.authService.isAuthenticated();
+    interval(720000).subscribe(() => this.authService.refreshToken());
   }
 
   isVisible$: Observable<boolean> = this.navbarService.visible$;

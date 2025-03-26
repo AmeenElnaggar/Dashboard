@@ -36,6 +36,5 @@ export class SubcategoryComponent {
       enteredPage: '',
       categoryName: this.categoryName!,
     });
-    this.allSubCategories$.subscribe((res) => console.log(res));
   }
 }

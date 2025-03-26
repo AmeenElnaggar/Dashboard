@@ -1,3 +1,29 @@
+<div class="flex items-center justify-between mb-3">
+  <p
+    class="text-2xl font-semibold tracking-wider text-textColor dark:text-textColor-dark"
+  >
+    All Categories
+  </p>
+  <div
+    class="relative sm:mr-0 -mr-12"
+    [class]="{
+      hidden: (allCategories$ | async).length === 0
+    }"
+  >
+    <input
+      type="text"
+      placeholder="Search..."
+      (input)="onSearchChange($event)"
+      [(ngModel)]="searchValue"
+      class="pl-10 pr-4 py-2 sm:w-full w-[75%] border dark:border-gray-500 rounded-full text-sm bg-backgroundBody dark:bg-background-dark text-textColor dark:text-textColor-dark"
+    />
+    <i
+      class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+    ></i>
+  </div>
+</div>
+<hr />
+
 @if (pageLoading$ | async) {
 <div
   class="text-center absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2"
@@ -25,25 +51,6 @@
       No Categories Available !!
     </p>
     }@else {
-    <div class="flex items-center justify-between mb-3">
-      <p
-        class="text-2xl font-semibold tracking-wider text-textColor dark:text-textColor-dark"
-      >
-        All Categories
-      </p>
-      <div class="relative sm:mr-0 -mr-12">
-        <input
-          type="text"
-          placeholder="Search..."
-          (input)="onSearchChange($event)"
-          class="pl-10 pr-4 py-2 sm:w-full w-[75%] border dark:border-gray-500 rounded-full text-sm bg-backgroundBody dark:bg-background-dark text-textColor dark:text-textColor-dark"
-        />
-        <i
-          class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
-        ></i>
-      </div>
-    </div>
-    <hr />
     <div class="flex flex-col sm:flex-row flex-wrap gap-4 mt-2 ml-8 sm:ml-0">
       @for (category of (allCategories$ | async).data; track $index) {
       <div class="flex gap-4">
@@ -94,7 +101,7 @@
     }
   </div>
 
-  <div>
+  <!-- <div>
     @if ((allCategories$ | async).data.length !== 0) {
     <p-paginator
       (onPageChange)="onPageChange($event)"
@@ -106,23 +113,23 @@
     <div [ngClass]="{ notEmpty: (allCategories$ | async).data.length !== 0 }">
       <app-category-upload />
     </div>
-  </div>
+  </div> -->
+</div>
+
+<div
+  class="flex items-center relative"
+  [ngClass]="{ notEmpty: (allCategories$ | async)?.data?.length !== 0 }"
+>
+  @if ((allCategories$ | async)?.data?.length !== 0) {
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="(allCategories$ | async)?.pagination?.currentPage - 1"
+    [rows]="rows"
+    [totalRecords]="(allCategories$ | async)?.pagination?.count"
+  />
+  }
+  <app-category-upload />
 </div>
 }
 
-<!--
-
-    <div
-    class="flex items-center relative"
-    [ngClass]="{ notEmpty: (allCategories$ | async).data.length !== 0 }"
-  >
-    @if ((allCategories$ | async).data.length !== 0) {
-    <p-paginator
-      (onPageChange)="onPageChange($event)"
-      [first]="first"
-      [rows]="rows"
-      [totalRecords]="(allCategories$ | async).pagination.count"
-    />
-    }
-    <app-category-upload />
-  </div> -->
+<!-- ------------------------------- -->

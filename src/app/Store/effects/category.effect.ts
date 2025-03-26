@@ -75,17 +75,17 @@ export class CategoriesEffect {
               tap((responseSuccess: any) => {
                 this.store.dispatch(stopLoadingAction({}));
 
-                // let currentTotalItems: number = 0;
-                // const subscribtion =
-                //   this.categoryService.allCategories$.subscribe((res) => {
-                //     currentTotalItems = res.pagination.count + 1;
-                //   });
-                // this.destroyRef.onDestroy(() => subscribtion.unsubscribe());
+                let currentTotalItems: number = 0;
 
-                // let totalPages = Math.ceil(
-                //   currentTotalItems / pagination.currentRows
-                // );
-                // console.log(totalPages);
+                const subscribtion =
+                  this.categoryService.allCategories$.subscribe((res) => {
+                    currentTotalItems = res.pagination.count + 1;
+                  });
+                this.destroyRef.onDestroy(() => subscribtion.unsubscribe());
+
+                let totalPages = Math.ceil(
+                  currentTotalItems / pagination.currentRows
+                );
                 this.store.dispatch(
                   fetchAllCategoriesAction({
                     page: pagination.currentPage,
@@ -144,7 +144,6 @@ export class CategoriesEffect {
                 if (pagination.currentPage > totalPages) {
                   newPage = Math.max(totalPages, 1);
                 }
-                console.log(newPage);
 
                 this.store.dispatch(
                   fetchAllCategoriesAction({
@@ -208,19 +207,26 @@ export class CategoriesEffect {
   searchCategoryEffect = createEffect(() =>
     this.actions$.pipe(
       ofType(searchCategoryAction),
-      switchMap(({ searchKey }) => {
-        const pagination = this.categoryService.getCategoryPagination();
+      tap(() => this.store.dispatch(startLoadingAction({ id: 'c' }))),
+
+      switchMap(({ searchKey, currentPage }) => {
+        // const pagination = this.categoryService.getCategoryPagination();
         return this.httpClient
           .get(
-            `https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/read_all?size=${pagination.currentRows}&search=${searchKey}`
+            `https://clothingapp-production-681d.up.railway.app/api/v1/admin/categories/read_all?size=1&search=${searchKey}&page=${currentPage}`
           )
           .pipe(
             map((responseSuccess: any) => {
+              console.log(responseSuccess);
+              this.store.dispatch(stopLoadingAction({ id: 'c' }));
+
               return getSearchCategoryResponseAction({
                 payload: responseSuccess,
               });
             }),
             catchError((responseError: any) => {
+              this.store.dispatch(stopLoadingAction({ id: 'c' }));
+
               return of(
                 getSearchCategoryResponseAction({
                   payload: responseError,
